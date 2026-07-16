@@ -7,7 +7,7 @@ import { Button } from "./Button";
 type Fields = { name: string; email: string; organization: string };
 const initialFields: Fields = { name: "", email: "", organization: "" };
 
-export function LeadDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: "assessment" | "strategy"; onClose: () => void }) {
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export function LeadDialog({ open, onClose }: { open: boolean; onClose: () => vo
     if (Object.keys(nextErrors).length) return;
 
     setStatus("submitting");
-    const result = await submitLead(fields);
+    const result = await submitLead({ ...fields, interest: intent });
     if (result.ok) {
       setStatus("success");
       setFields(initialFields);
@@ -73,14 +73,14 @@ export function LeadDialog({ open, onClose }: { open: boolean; onClose: () => vo
           <div className="dialog__success" aria-live="polite">
             <p className="eyebrow">Request received</p>
             <h2 id={titleId}>Thank you. We will be in touch.</h2>
-            <p>Your request has been submitted for an executive strategy conversation.</p>
+            <p>{intent === "assessment" ? "Your assessment request has been submitted." : "Your request has been submitted for an executive strategy conversation."}</p>
             <Button onClick={onClose}>Close</Button>
           </div>
         ) : (
           <>
-            <p className="eyebrow">Executive briefing</p>
-            <h2 id={titleId}>Schedule an executive strategy session</h2>
-            <p id={descriptionId} className="dialog__intro">Tell us where to reach you. The submission destination can be connected to your preferred CRM or scheduling workflow.</p>
+            <p className="eyebrow">{intent === "assessment" ? "AI transformation readiness" : "Executive briefing"}</p>
+            <h2 id={titleId}>{intent === "assessment" ? "Request the AI Transformation Readiness Assessment" : "Schedule an executive strategy session"}</h2>
+            <p id={descriptionId} className="dialog__intro">{intent === "assessment" ? "Tell us where to reach you to begin an advisory assessment of the foundations required for coordinated AI transformation." : "Tell us where to reach you to begin a focused conversation about your transformation priorities."}</p>
             <form onSubmit={handleSubmit} noValidate>
               {(["name", "email", "organization"] as const).map((field) => {
                 const labels = { name: "Name", email: "Work email", organization: "Organization" };
@@ -103,7 +103,7 @@ export function LeadDialog({ open, onClose }: { open: boolean; onClose: () => vo
               {status === "error" && <p className="form-error" role="alert">{message}</p>}
               <div className="dialog__actions">
                 <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-                <Button type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Submitting…" : "Submit request"}</Button>
+                <Button type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Submitting…" : intent === "assessment" ? "Request assessment" : "Request session"}</Button>
               </div>
             </form>
           </>

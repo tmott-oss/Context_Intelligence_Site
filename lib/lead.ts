@@ -2,6 +2,7 @@ export type Lead = {
   name: string;
   email: string;
   organization: string;
+  interest?: "assessment" | "strategy";
 };
 
 export type LeadResult = { ok: true } | { ok: false; message: string };

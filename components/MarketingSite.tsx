@@ -5,45 +5,51 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
   About,
-  Assessment,
-  Asset,
-  BeforeAfter,
+  Blueprint,
   Contact,
-  Cost,
+  ContextDifferentiator,
+  Deliverables,
+  Engagement,
+  FailurePoints,
   Hero,
-  Methodology,
-  Pathways,
-  Problem,
-  Process,
-  WhatWeDo,
+  MarketProblem,
+  ReadinessAssessment,
+  TransformationEquation,
 } from "@/components/sections/Sections";
 import { LeadDialog } from "@/components/ui/LeadDialog";
 
 export function MarketingSite() {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const openDialog = useCallback(() => setDialogOpen(true), []);
+  const [dialogIntent, setDialogIntent] = useState<"assessment" | "strategy">("assessment");
+  const openAssessment = useCallback(() => {
+    setDialogIntent("assessment");
+    setDialogOpen(true);
+  }, []);
+  const openStrategy = useCallback(() => {
+    setDialogIntent("strategy");
+    setDialogOpen(true);
+  }, []);
   const closeDialog = useCallback(() => setDialogOpen(false), []);
 
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <Header onRequest={openDialog} />
+      <Header onRequest={openStrategy} />
       <main id="main-content">
-        <Hero onRequest={openDialog} />
-        <Problem />
-        <Cost />
-        <Asset />
-        <WhatWeDo />
-        <Methodology />
-        <Pathways onRequest={openDialog} />
-        <Process />
-        <BeforeAfter />
+        <Hero onAssessment={openAssessment} />
+        <MarketProblem />
+        <FailurePoints />
+        <Blueprint />
+        <TransformationEquation />
+        <ContextDifferentiator />
+        <Deliverables />
+        <Engagement />
+        <ReadinessAssessment onAssessment={openAssessment} />
         <About />
-        <Assessment onRequest={openDialog} />
-        <Contact onRequest={openDialog} />
+        <Contact onAssessment={openAssessment} onStrategy={openStrategy} />
       </main>
       <Footer />
-      <LeadDialog open={dialogOpen} onClose={closeDialog} />
+      <LeadDialog key={`${dialogIntent}-${dialogOpen}`} open={dialogOpen} intent={dialogIntent} onClose={closeDialog} />
     </>
   );
 }

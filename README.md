@@ -1,17 +1,18 @@
 # Context Intelligence
 
-Production marketing site for Context Intelligence, an independent executive advisory firm focused on Organizational Intelligence, AI transformation strategy, and business independence.
+Production marketing site for Context Intelligence, an independent executive advisory firm focused on organizational AI transformation.
 
 ## Project shape
 
 - Sites/Vinext starter and Cloudflare Worker-compatible output
 - React 19 and TypeScript
-- Responsive semantic marketing site at `/`
+- Responsive semantic marketing site centered on the AI Transformation Blueprint™ at `/`
+- Secondary Business Independence advisory route at `/pathways/business-independence`
 - Isolated React Three Fiber experiment at `/graph-lab`
 - CSS custom properties based on the supplied Claude Design tokens
 - Replaceable lead-capture and scheduling integration boundaries
 
-The production hero intentionally uses a lightweight canvas network. The Three.js graph remains isolated until it passes the visual approval gate.
+The production hero intentionally uses a lightweight canvas network. The Three.js graph remains isolated until it passes the visual approval gate and is not positioned as the company’s primary offering.
 
 ## Local development
 
