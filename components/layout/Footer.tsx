@@ -8,15 +8,15 @@ export function Footer() {
           <div className="footer__logo-crop">
             <Image src="/assets/logo-full.png" alt="Context Intelligence" width={300} height={110} unoptimized />
           </div>
-          <p>The executive advisory practice for building organizational intelligence into a strategic asset.</p>
+          <p>Independent executive advisory for coordinated, measurable, and scalable organizational AI transformation.</p>
         </div>
-        <FooterColumn title="Discipline" links={[["Organizational Intelligence", "#asset"], ["The methodology", "#methodology"], ["Process", "#process"]]} />
-        <FooterColumn title="Engagements" links={[["AI Transformation Blueprint", "#pathway-ai"], ["Business Independence Blueprint", "#pathway-bi"], ["Assessment", "#assessment"]]} />
-        <FooterColumn title="Firm" links={[["About", "#about"], ["Contact", "#contact"], ["Graph Lab", "/graph-lab"]]} />
+        <FooterColumn title="Transformation" links={[["AI Transformation Blueprint™", "/#blueprint"], ["Business Context Engine™", "/#context-engine"], ["Readiness Assessment", "/#assessment"]]} />
+        <FooterColumn title="Advisory" links={[["What We Deliver", "/#services"], ["Engagement Model", "/#engagement"], ["Business Independence", "/pathways/business-independence"]]} />
+        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"]]} />
       </div>
       <div className="footer__base shell">
         <span>© 2026 Context Intelligence</span>
-        <span>Capture. Connect. Activate. <b>Advantage.</b></span>
+        <span>Vision. Processes. Context. Workflows. Agents. Adoption. <b>Scale.</b></span>
       </div>
     </footer>
   );

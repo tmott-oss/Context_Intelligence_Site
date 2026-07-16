@@ -20,16 +20,26 @@ test("server-renders the Context Intelligence marketing site", async () => {
 
   const html = await response.text();
   assert.match(html, /Context Intelligence/);
-  assert.match(html, /Your organization is losing/);
-  assert.match(html, /Organizational Intelligence/);
-  assert.match(html, /Capture\. Connect\. Activate\. Advantage\./);
+  assert.match(html, /AI isn(?:&apos;|&#x27;|’)t a software project/i);
+  assert.match(html, /Organizational AI Transformation/);
+  assert.match(html, /AI Transformation Blueprint/);
+  assert.match(html, /Business Context Engine/);
+  assert.match(html, /Vision[\s\S]*Processes[\s\S]*Context[\s\S]*AI-Enabled Workflows[\s\S]*AI Agents[\s\S]*Adoption[\s\S]*Scale/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("server-renders the secondary Business Independence pathway", async () => {
+  const response = await render("/pathways/business-independence");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Business Independence Blueprint/);
+  assert.match(html, /Reduce owner dependency/);
 });
 
 test("server-renders the isolated graph lab", async () => {
   const response = await render("/graph-lab");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Organizational Intelligence Graph Lab/);
-  assert.match(html, /Not in production hero/i);
+  assert.match(html, /AI Transformation Architecture Lab/);
+  assert.match(html, /Seven business systems/);
 });

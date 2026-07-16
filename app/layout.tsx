@@ -10,12 +10,15 @@ export const metadata: Metadata = {
     template: "%s | Context Intelligence",
   },
   description:
-    "The executive advisory practice for building organizational intelligence into a strategic asset.",
+    "Executive advisory for moving from disconnected AI activity to coordinated, measurable, and scalable organizational transformation.",
   keywords: [
-    "organizational intelligence",
+    "organizational AI transformation",
+    "AI Transformation Blueprint",
     "AI transformation strategy",
-    "knowledge architecture",
-    "business independence",
+    "business context architecture",
+    "AI readiness assessment",
+    "AI-enabled workflow design",
+    "AI agent strategy",
     "executive advisory",
   ],
   icons: {
@@ -24,16 +27,14 @@ export const metadata: Metadata = {
     apple: "/assets/logo-mark.png",
   },
   openGraph: {
-    title: "Context Intelligence",
-    description: "AI is not the competitive advantage. Context is.",
+    title: "Context Intelligence | Organizational AI Transformation",
+    description: "AI isn’t a software project. It’s a business transformation initiative.",
     type: "website",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "AI is not the competitive advantage. Context is." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Context Intelligence",
-    description: "Capture. Connect. Activate. Advantage.",
-    images: ["/og.png"],
+    title: "Context Intelligence | Organizational AI Transformation",
+    description: "Move from disconnected AI activity to coordinated business transformation.",
   },
 };
 
