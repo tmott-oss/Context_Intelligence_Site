@@ -3,7 +3,7 @@ import { BlueprintExplorer } from "@/components/ui/BlueprintExplorer";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MarketProblemCarousel } from "@/components/ui/MarketProblemCarousel";
-import { HeroNetwork } from "@/components/graph/HeroNetwork";
+import { HeroTransformationVisual } from "@/components/graph/HeroTransformationVisual";
 
 export type RequestActions = {
   onAssessment: () => void;
@@ -42,7 +42,7 @@ const engagementStages = [
 export function Hero({ onAssessment }: Pick<RequestActions, "onAssessment">) {
   return (
     <section className="hero hero--transformation" aria-labelledby="hero-title">
-      <HeroNetwork />
+      <HeroTransformationVisual />
       <div className="hero__veil" />
       <div className="shell hero__inner">
         <div className="hero__copy">

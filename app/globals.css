@@ -495,3 +495,50 @@ img, canvas { display: block; max-width: 100%; }
   .services-note { font-size: 20px; }
   .readiness-level > div { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
+
+/* Seven-system AI transformation architecture */
+.transformation-architecture { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.transformation-architecture canvas { width: 100% !important; height: 100% !important; touch-action: pan-y; }
+.transformation-architecture--hero { left: 34%; z-index: 0; opacity: .88; mask-image: radial-gradient(86% 82% at 62% 44%, #000 26%, transparent 80%); }
+.hero--transformation .hero__veil { z-index: 0; background: linear-gradient(90deg, var(--navy-900) 0%, rgba(10,15,30,.97) 30%, rgba(10,15,30,.48) 60%, rgba(10,15,30,.78) 100%); }
+
+.graph-lab .transformation-architecture { left: 34%; }
+.graph-lab__copy h1 em { color: var(--gold-400); font-style: italic; }
+.graph-lab__roadmap { position: absolute; z-index: 2; right: var(--gutter); bottom: 28px; display: flex; align-items: center; gap: 16px; pointer-events: none; }
+.graph-lab__roadmap span { --roadmap-color: var(--blue-400); position: relative; display: flex; align-items: center; gap: 7px; color: var(--paper-400); font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
+.graph-lab__roadmap span:nth-child(2) { --roadmap-color: #3aa9a3; }
+.graph-lab__roadmap span:nth-child(3) { --roadmap-color: #9b6fd0; }
+.graph-lab__roadmap span:nth-child(4) { --roadmap-color: #65a950; }
+.graph-lab__roadmap span:nth-child(5) { --roadmap-color: #df7a28; }
+.graph-lab__roadmap span:nth-child(6) { --roadmap-color: #dcae3b; }
+.graph-lab__roadmap span:nth-child(7) { --roadmap-color: #326fc8; }
+.graph-lab__roadmap span:not(:last-child)::after { content: ""; width: 18px; height: 1px; margin-left: 5px; background: linear-gradient(90deg, var(--roadmap-color), rgba(247,244,236,.12)); }
+.graph-lab__roadmap i { color: var(--roadmap-color); font-style: normal; }
+
+.transformation-fallback { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.transformation-fallback__path { position: absolute; left: 45%; right: 5%; top: 18%; bottom: 16%; }
+.transformation-fallback__path::before { content: ""; position: absolute; left: 4%; right: 4%; top: 50%; height: 1px; background: linear-gradient(90deg, rgba(65,144,255,.32), rgba(220,174,59,.56), rgba(50,111,200,.35)); transform: rotate(-14deg); transform-origin: center; }
+.transformation-fallback__path > div { position: absolute; left: calc(var(--i) * 15.4%); top: calc(76% - var(--i) * 10.2%); display: grid; justify-items: center; gap: 12px; color: var(--stage); font-family: var(--font-mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
+.transformation-fallback__path i { width: 13px; height: 13px; border: 2px solid currentColor; border-radius: 50%; background: color-mix(in srgb, var(--stage) 35%, var(--navy-900)); box-shadow: 0 0 0 8px color-mix(in srgb, var(--stage) 8%, transparent), 0 0 26px color-mix(in srgb, var(--stage) 32%, transparent); }
+.transformation-fallback--compact .transformation-fallback__path { left: 36%; opacity: .58; }
+
+@media (max-width: 1180px) {
+  .transformation-architecture--hero { left: 42%; opacity: .72; }
+  .graph-lab .transformation-architecture { left: 28%; opacity: .8; }
+  .graph-lab__roadmap { gap: 10px; }
+  .graph-lab__roadmap span:not(:last-child)::after { width: 8px; }
+}
+
+@media (max-width: 768px) {
+  .graph-lab__header { align-items: flex-start; flex-direction: column; }
+  .graph-lab__stage { align-items: flex-start; min-height: calc(100svh - 92px); padding-top: 58px; padding-bottom: 210px; }
+  .graph-lab__copy { width: 100%; }
+  .graph-lab__copy h1 { font-size: clamp(2.75rem, 13vw, 4.3rem); }
+  .graph-lab__copy > p:last-child { font-size: 15px; }
+  .graph-lab .transformation-fallback { top: 36%; }
+  .transformation-fallback__path { left: 4%; right: 4%; top: 36%; bottom: 10%; }
+  .transformation-fallback__path > div { gap: 8px; font-size: 7px; }
+  .transformation-fallback__path i { width: 10px; height: 10px; }
+  .graph-lab__roadmap { left: var(--gutter); right: var(--gutter); bottom: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 14px; }
+  .graph-lab__roadmap span:not(:last-child)::after { display: none; }
+}

@@ -11,22 +11,19 @@ export default function GraphLab() {
     <main className="graph-lab">
       <header className="graph-lab__header">
         <Link href="/" className="graph-lab__back">← Context Intelligence</Link>
-        <span>Experimental route · Not in production hero</span>
+        <span>Transformation Architecture Lab · Production visual system</span>
       </header>
       <section className="graph-lab__stage" aria-labelledby="graph-lab-title">
-        <Suspense fallback={<GraphFallback message="Preparing the Organizational Intelligence graph." />}>
+        <Suspense fallback={<GraphFallback message="Preparing the AI transformation architecture." />}>
           <KnowledgeGraph />
         </Suspense>
         <div className="graph-lab__copy">
-          <p className="eyebrow">Organizational Intelligence Graph Lab</p>
-          <h1 id="graph-lab-title">Context becomes intelligence when the organization can connect and use it.</h1>
-          <p>People, conversations, decisions, processes, systems, documents, and outcomes begin as fragmented clusters. Blue connections form. Gold nodes mark intelligence activated into enterprise value.</p>
+          <p className="eyebrow">AI Transformation Architecture Lab</p>
+          <h1 id="graph-lab-title">Seven business systems. <em>One coordinated transformation.</em></h1>
+          <p>Vision, processes, context, workflows, agents, adoption, and scale begin as separate activity. The architecture aligns them into a connected operating system for measurable business value.</p>
         </div>
-        <div className="graph-lab__legend" aria-label="Graph color legend">
-          <span><i className="legend-dim" /> Trapped</span>
-          <span><i className="legend-ivory" /> Available</span>
-          <span><i className="legend-blue" /> Connected</span>
-          <span><i className="legend-gold" /> Activated</span>
+        <div className="graph-lab__roadmap" aria-label="AI Transformation Blueprint stages">
+          {['Vision', 'Processes', 'Context', 'Workflows', 'Agents', 'Adoption', 'Scale'].map((stage, index) => <span key={stage}><i>{String(index + 1).padStart(2, '0')}</i>{stage}</span>)}
         </div>
       </section>
     </main>

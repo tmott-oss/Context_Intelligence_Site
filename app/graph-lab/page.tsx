@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import GraphLab from "@/components/graph/GraphLab";
 
 export const metadata: Metadata = {
-  title: "Organizational Intelligence Graph Lab",
-  description: "An isolated visual laboratory for the Context Intelligence knowledge graph.",
+  title: "AI Transformation Architecture Lab",
+  description: "An isolated visual laboratory for the seven-system AI transformation architecture.",
   robots: { index: false, follow: false },
 };
 

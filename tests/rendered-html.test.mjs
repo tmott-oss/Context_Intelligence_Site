@@ -40,6 +40,6 @@ test("server-renders the isolated graph lab", async () => {
   const response = await render("/graph-lab");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Organizational Intelligence Graph Lab/);
-  assert.match(html, /Not in production hero/i);
+  assert.match(html, /AI Transformation Architecture Lab/);
+  assert.match(html, /Seven business systems/);
 });
