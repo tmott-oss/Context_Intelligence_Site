@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Context Intelligence",
   },
   description:
-    "Executive advisory for moving from disconnected AI activity to coordinated, measurable, and scalable organizational transformation.",
+    "Independent executive advisory for organizational AI transformation—strategy, context, workflow redesign, governance, adoption, and measurable business outcomes.",
   keywords: [
     "organizational AI transformation",
     "AI Transformation Blueprint",
@@ -28,20 +28,20 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Context Intelligence | Organizational AI Transformation",
-    description: "AI isn’t a software project. It’s a business transformation initiative.",
+    description: "Strategy first. Context built in. Business value measured.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Context Intelligence | Organizational AI Transformation",
-    description: "Move from disconnected AI activity to coordinated business transformation.",
+    description: "Strategy first. Context built in. Business value measured.",
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0A0F1E",
+  themeColor: "#F8FAFC",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

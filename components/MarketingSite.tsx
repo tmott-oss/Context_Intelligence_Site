@@ -5,16 +5,15 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
   About,
-  Blueprint,
+  AgentActivation,
+  Audience,
   Contact,
-  ContextDifferentiator,
-  Deliverables,
   Engagement,
-  FailurePoints,
   Hero,
   MarketProblem,
-  ReadinessAssessment,
-  TransformationEquation,
+  Methodology,
+  Perspectives,
+  PointOfView,
 } from "@/components/sections/Sections";
 import { LeadDialog } from "@/components/ui/LeadDialog";
 
@@ -36,15 +35,14 @@ export function MarketingSite() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Header onRequest={openStrategy} />
       <main id="main-content">
-        <Hero onAssessment={openAssessment} />
+        <Hero onStrategy={openStrategy} />
         <MarketProblem />
-        <FailurePoints />
-        <Blueprint />
-        <TransformationEquation />
-        <ContextDifferentiator />
-        <Deliverables />
+        <PointOfView />
+        <Methodology />
+        <AgentActivation />
         <Engagement />
-        <ReadinessAssessment onAssessment={openAssessment} />
+        <Audience />
+        <Perspectives />
         <About />
         <Contact onAssessment={openAssessment} onStrategy={openStrategy} />
       </main>

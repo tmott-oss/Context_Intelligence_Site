@@ -20,11 +20,13 @@ test("server-renders the Context Intelligence marketing site", async () => {
 
   const html = await response.text();
   assert.match(html, /Context Intelligence/);
-  assert.match(html, /AI isn(?:&apos;|&#x27;|’)t a software project/i);
+  assert.match(html, /AI transformation doesn(?:&apos;|&#x27;|’)t start with technology/i);
   assert.match(html, /Organizational AI Transformation/);
   assert.match(html, /AI Transformation Blueprint/);
-  assert.match(html, /Business Context Engine/);
-  assert.match(html, /Vision[\s\S]*Processes[\s\S]*Context[\s\S]*AI-Enabled Workflows[\s\S]*AI Agents[\s\S]*Adoption[\s\S]*Scale/);
+  assert.match(html, /Map[\s\S]*Model[\s\S]*Mobilize/);
+  assert.match(html, /Agents should earn the right to act/);
+  assert.match(html, /first three workflows worth agentizing/i);
+  assert.doesNotMatch(html, /Capture[\s\S]{0,12}Connect[\s\S]{0,12}Activate|Organizational Intelligence Flywheel/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 

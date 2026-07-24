@@ -8,15 +8,15 @@ export function Footer() {
           <div className="footer__logo-crop">
             <Image src="/assets/logo-full.png" alt="Context Intelligence" width={300} height={110} unoptimized />
           </div>
-          <p>Independent executive advisory for coordinated, measurable, and scalable organizational AI transformation.</p>
+          <p>Independent executive advisory for organizational AI transformation.</p>
         </div>
-        <FooterColumn title="Transformation" links={[["AI Transformation Blueprint™", "/#blueprint"], ["Business Context Engine™", "/#context-engine"], ["Readiness Assessment", "/#assessment"]]} />
-        <FooterColumn title="Advisory" links={[["What We Deliver", "/#services"], ["Engagement Model", "/#engagement"], ["Business Independence", "/pathways/business-independence"]]} />
+        <FooterColumn title="Transformation" links={[["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"]]} />
+        <FooterColumn title="Explore" links={[["Executive Perspectives", "/#perspectives"], ["Business Independence", "/pathways/business-independence"], ["Schedule a Conversation", "/#contact"]]} />
         <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"]]} />
       </div>
       <div className="footer__base shell">
         <span>© 2026 Context Intelligence</span>
-        <span>Vision. Processes. Context. Workflows. Agents. Adoption. <b>Scale.</b></span>
+        <span>Strategy first. Context built in. <b>Business value measured.</b></span>
       </div>
     </footer>
   );

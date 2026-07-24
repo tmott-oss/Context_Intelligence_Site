@@ -1,62 +1,117 @@
 import Image from "next/image";
-import { BlueprintExplorer } from "@/components/ui/BlueprintExplorer";
+import { HeroNetwork } from "@/components/graph/HeroNetwork";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { MarketProblemCarousel } from "@/components/ui/MarketProblemCarousel";
-import { HeroTransformationVisual } from "@/components/graph/HeroTransformationVisual";
 
 export type RequestActions = {
   onAssessment: () => void;
   onStrategy: () => void;
 };
 
-const failurePoints = [
-  ["01", "Vision", "No shared definition of what AI-enabled success should look like."],
-  ["02", "Processes", "No disciplined focus on the high-frequency, high-impact work where AI can create leverage."],
-  ["03", "Context", "AI lacks the knowledge, rules, history, terminology, and operating reality of the organization."],
-  ["04", "Workflows", "Individual tasks are automated without redesigning how work should flow across people and systems."],
-  ["05", "Agents", "Bots and copilots are deployed without defined roles, objectives, boundaries, or accountability."],
-  ["06", "Adoption", "Employees are expected to change without sufficient leadership, enablement, reinforcement, or trust."],
-  ["07", "Scale", "Early wins remain isolated because there is no operating model for expanding and improving them."],
+const methodology = [
+  {
+    number: "1",
+    name: "Map",
+    statement: "Understand the business.",
+    body: "Map priorities, workflows, decisions, systems, data, knowledge, constraints, risks, and readiness. Identify where AI can create the greatest measurable value.",
+    points: [
+      "Strategic priorities",
+      "Workflow opportunities",
+      "Decisions and bottlenecks",
+      "Systems and data",
+      "Knowledge and context",
+      "Readiness and risk",
+    ],
+  },
+  {
+    number: "2",
+    name: "Model",
+    statement: "Design how AI should operate.",
+    body: "Model the context, rules, permissions, approvals, escalation points, governance, success metrics, and economics required for each selected workflow.",
+    points: [
+      "Target workflow",
+      "Required context",
+      "Agent actions",
+      "Human approvals",
+      "Governance and escalation",
+      "Business metrics and economics",
+    ],
+  },
+  {
+    number: "3",
+    name: "Mobilize",
+    statement: "Activate and scale what works.",
+    body: "Prioritize a portfolio of initiatives and agents, launch stackable early wins, prepare employees and leaders, measure impact, and expand what works.",
+    points: [
+      "Prioritized initiatives",
+      "Stackable early wins",
+      "Agent deployment",
+      "Adoption and enablement",
+      "Performance measurement",
+      "Expansion and improvement",
+    ],
+  },
 ] as const;
 
-const services = [
-  ["Executive AI Alignment", "Align leadership around business outcomes, priorities, decision rights, investment principles, and accountability."],
-  ["AI Transformation Readiness Assessment", "Evaluate readiness across vision, processes, context, workflows, governance, adoption, and scale."],
-  ["Process and Opportunity Discovery", "Prioritize high-frequency, high-impact work according to value, feasibility, risk, and readiness."],
-  ["Business Context Architecture", "Define the knowledge, policies, systems, ownership, and access model required for reliable AI and decisions."],
-  ["AI-Enabled Workflow Design", "Redesign workflows around outcomes by combining people, context, AI, automation, and existing systems."],
-  ["Agent Strategy", "Determine where specialized agents create leverage, what they require, and how they should be governed."],
-  ["Governance and Operating Model", "Establish ownership, standards, risk controls, decision rights, measurement, and coordination."],
-  ["Adoption and Change Strategy", "Build the leadership, enablement, communication, reinforcement, and measurement required for behavioral change."],
-  ["Transformation Roadmap", "Sequence early wins and long-term capabilities while guiding execution, partner coordination, measurement, and expansion."],
+const agentPath = [
+  "Business priority identified",
+  "Workflow mapped",
+  "Value and feasibility tested",
+  "Context and systems modeled",
+  "Agent actions and boundaries defined",
+  "Human approvals and escalations established",
+  "Deployment measured against a business outcome",
+  "Successful capabilities expanded",
 ] as const;
 
-const engagementStages = [
-  ["01", "Assess", "Understand the current state, executive priorities, AI activity, process opportunities, context gaps, and adoption readiness.", "AI Transformation Readiness Assessment"],
-  ["02", "Architect", "Define the future-state architecture across vision, processes, context, workflows, agents, governance, adoption, and scale.", "AI Transformation Blueprint™ and prioritized roadmap"],
-  ["03", "Activate", "Guide selected initiatives into implementation with early measurable wins and the foundations required to sustain them.", "Activated use cases, redesigned workflows, governance, and adoption plan"],
-  ["04", "Expand", "Measure results, improve the system, and scale successful capabilities across functions and business units.", "Enterprise transformation roadmap and continuous-improvement model"],
+const autonomyLevels = [
+  ["Observe", "See the work and surface relevant context."],
+  ["Recommend", "Suggest a next action for a person to evaluate."],
+  ["Prepare", "Draft the work while a person remains responsible."],
+  ["Act with approval", "Execute only after an explicit human decision."],
+  ["Act within boundaries", "Operate autonomously inside defined permissions and controls."],
 ] as const;
 
-export function Hero({ onAssessment }: Pick<RequestActions, "onAssessment">) {
+const audiences = [
+  "Leadership teams that need a practical AI strategy",
+  "Organizations with many experiments but little measurable value",
+  "Companies considering agents but lacking governance and context",
+  "Mature businesses seeking greater scale and less dependency on individuals",
+  "Leaders preparing their organization for growth, succession, or acquisition",
+] as const;
+
+const perspectives = [
+  ["AI Strategy", "Why Most AI Initiatives Underperform", "Technology moves faster than operating models. The missing work is deciding what should change, who owns it, and how value will be measured."],
+  ["Business Context", "The Context Gap in Enterprise AI", "General intelligence is not organizational judgment. Reliable AI needs the rules, history, terminology, systems, and constraints of the business."],
+  ["Agent Governance", "What an Agent Operating Model Must Define", "Before an agent acts, leaders need clarity on permissions, approvals, escalation, accountability, risk, and performance."],
+  ["Workflow Design", "From AI Experiments to Measurable Workflows", "The unit of transformation is not a tool or task. It is a redesigned workflow tied to a business outcome."],
+  ["Technology Decisions", "Why Technology Must Follow Workflow Design", "The right stack becomes clearer after the outcome, workflow, context, controls, and integration requirements are understood."],
+  ["Business Independence", "Preparing Founder-Led Businesses for AI and Scale", "Reducing key-person dependency creates a stronger foundation for AI, succession, acquisition, and durable enterprise value."],
+] as const;
+
+export function Hero({ onStrategy }: Pick<RequestActions, "onStrategy">) {
   return (
-    <section className="hero hero--transformation" aria-labelledby="hero-title">
-      <HeroTransformationVisual />
-      <div className="hero__veil" />
-      <div className="shell hero__inner">
-        <div className="hero__copy">
+    <section className="clarity-hero" aria-labelledby="hero-title">
+      <div className="clarity-hero__visual" aria-hidden="true">
+        <HeroNetwork />
+        <span className="graph-note graph-note--strategy"><b>Strategy</b>Align investments with business priorities.</span>
+        <span className="graph-note graph-note--people"><b>People</b>Equip teams with insight and clarity.</span>
+        <span className="graph-note graph-note--process"><b>Processes</b>Reveal how work is done and where value is created.</span>
+        <span className="graph-note graph-note--data"><b>Data</b>Make data usable and contextual.</span>
+        <span className="graph-note graph-note--technology"><b>Technology</b>Adopt and integrate with purpose.</span>
+        <span className="graph-note graph-note--outcomes"><b>Outcomes</b>Measure impact that matters.</span>
+      </div>
+      <div className="shell clarity-hero__inner">
+        <div className="clarity-hero__copy">
           <Eyebrow>Organizational AI Transformation</Eyebrow>
-          <h1 id="hero-title">AI isn&apos;t a software project. <em>It&apos;s a business transformation initiative.</em></h1>
-          <div className="hero__body">
-            <p>Most organizations are experimenting with AI without a shared vision, a clear operating model, or a practical path to scale.</p>
-            <p>Context Intelligence helps leadership teams move from disconnected AI activity to coordinated business transformation—aligning vision, processes, organizational context, workflows, AI agents, adoption, and continuous improvement.</p>
-          </div>
+          <h1 id="hero-title">AI transformation doesn&apos;t start with technology. It starts with understanding the business.</h1>
+          <p>Context Intelligence helps leadership teams identify where AI can create meaningful value, design the context and controls it needs, and mobilize a governed portfolio of workflows and agents.</p>
           <div className="actions">
-            <Button onClick={onAssessment}>Assess Your AI Transformation Readiness</Button>
-            <a className="button button--outline" href="#blueprint">Explore the AI Transformation Blueprint <span aria-hidden="true">→</span></a>
+            <Button onClick={onStrategy}>Schedule an Executive Strategy Session</Button>
+            <a className="button button--outline" href="#methodology">Explore the Methodology</a>
           </div>
-          <p className="hero__advisory-note">Independent executive advisory—not a software platform.</p>
+          <p className="clarity-hero__proof">Strategy first. Context built in. Business value measured.</p>
         </div>
       </div>
     </section>
@@ -65,132 +120,119 @@ export function Hero({ onAssessment }: Pick<RequestActions, "onAssessment">) {
 
 export function MarketProblem() {
   return (
-    <section id="problem" className="section" aria-labelledby="problem-title">
+    <section id="why-it-matters" className="clarity-section clarity-problem anchor-section" aria-labelledby="problem-title">
       <div className="shell">
-        <div className="section-heading section-heading--wide">
-          <Eyebrow>The Market Problem</Eyebrow>
-          <h2 id="problem-title">Most companies are using AI. <em>Very few are transforming with it.</em></h2>
-          <p>AI tools are entering organizations faster than the organizations themselves are changing. Teams launch copilots, automate isolated tasks, test agents, and experiment with new platforms—but the activity rarely adds up to a coordinated transformation.</p>
-          <p>Without a shared business vision, prioritized processes, reliable organizational context, redesigned workflows, employee adoption, and a strategy for scale, AI becomes another layer of disconnected technology.</p>
+        <div className="clarity-heading clarity-heading--split">
+          <div>
+            <Eyebrow>Why AI Efforts Stall</Eyebrow>
+            <h2 id="problem-title">More AI activity does not automatically create transformation.</h2>
+          </div>
+          <p>When tools, experiments, and agents move ahead without a shared transformation model, activity multiplies while business value remains difficult to see.</p>
         </div>
         <MarketProblemCarousel />
-        <p className="pull-quote">The problem is not a lack of AI tools. <em>The problem is the absence of a transformation architecture.</em></p>
+        <p className="clarity-conclusion">These are not separate technology problems. They are symptoms of an organization attempting AI without a transformation model.</p>
       </div>
     </section>
   );
 }
 
-export function FailurePoints() {
+export function PointOfView() {
+  const typical = [
+    "Select tools before defining outcomes",
+    "Automate tasks without redesigning work",
+    "Treat context, controls, and adoption as follow-up work",
+    "Measure activity instead of business performance",
+  ];
+  const context = [
+    "Define the business outcome",
+    "Redesign the workflow around value",
+    "Model context, controls, approvals, and measures",
+    "Select technology that fits the operating design",
+  ];
   return (
-    <section className="section section--raised" aria-labelledby="stall-title">
+    <section className="clarity-section clarity-pov" aria-labelledby="pov-title">
       <div className="shell">
-        <div className="section-heading section-heading--wide">
-          <Eyebrow>Why Initiatives Stall</Eyebrow>
-          <h2 id="stall-title">AI initiatives rarely fail because the technology is incapable.</h2>
-          <p>They stall because one or more of the business foundations are missing.</p>
+        <div className="clarity-heading clarity-heading--center">
+          <Eyebrow centered>The Context Intelligence Point of View</Eyebrow>
+          <h2 id="pov-title">Technology should follow strategy—not the other way around.</h2>
         </div>
-        <div className="failure-grid">
-          {failurePoints.map(([number, title, text], index) => (
-            <article key={title} className={`failure-card stage-index-${index + 1}`}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
+        <div className="comparison">
+          <article>
+            <p className="comparison__label">Typical approach</p>
+            <h3>Tech first. Hope value follows.</h3>
+            <ul>{typical.map((item) => <li key={item}>{item}</li>)}</ul>
+          </article>
+          <span className="comparison__arrow" aria-hidden="true">Instead</span>
+          <article className="comparison__preferred">
+            <p className="comparison__label">Context Intelligence approach</p>
+            <h3>Strategy first. Value follows.</h3>
+            <ul>{context.map((item) => <li key={item}>{item}</li>)}</ul>
+          </article>
+        </div>
+        <p className="clarity-conclusion clarity-conclusion--center">The objective is not to implement more AI. It is to build an organization capable of using AI to improve how work gets done.</p>
+      </div>
+    </section>
+  );
+}
+
+export function Methodology() {
+  return (
+    <section id="methodology" className="clarity-section clarity-method anchor-section" aria-labelledby="method-title">
+      <HeroNetwork />
+      <div className="shell clarity-method__inner">
+        <div className="clarity-heading clarity-heading--center">
+          <Eyebrow centered>The AI Transformation Blueprint™</Eyebrow>
+          <h2 id="method-title">From AI ambition to governed execution.</h2>
+          <p>Map. Model. Mobilize.™ creates a connected path from understanding the business to activating and scaling what works.</p>
+        </div>
+        <div className="method-grid">
+          {methodology.map((stage) => (
+            <article key={stage.name}>
+              <span className="method-grid__number">{stage.number}</span>
+              <p className="method-grid__name">{stage.name}</p>
+              <h3>{stage.statement}</h3>
+              <p>{stage.body}</p>
+              <ul>{stage.points.map((point) => <li key={point}>{point}</li>)}</ul>
             </article>
           ))}
         </div>
-        <p className="section-close">The AI Transformation Blueprint™ addresses all seven.</p>
-      </div>
-    </section>
-  );
-}
-
-export function Blueprint() {
-  return (
-    <section id="blueprint" className="section blueprint-section anchor-section" aria-labelledby="blueprint-title">
-      <div className="shell">
-        <div className="blueprint-intro">
-          <div>
-            <Eyebrow>The Flagship Advisory Offering</Eyebrow>
-            <h2 id="blueprint-title">The AI Transformation Blueprint™</h2>
-          </div>
-          <div>
-            <p>The AI Transformation Blueprint is a practical architecture for moving from AI potential to measurable, lasting business value.</p>
-            <p>It gives leadership teams a structured path for deciding where they are going, which work should change, what context AI requires, how workflows should be redesigned, where agents belong, how adoption will be achieved, and how successful initiatives will scale.</p>
-            <p className="blueprint-principle">Do not start with technology. <em>Start with the business you are trying to build.</em></p>
-          </div>
-        </div>
-        <BlueprintExplorer />
-      </div>
-    </section>
-  );
-}
-
-export function TransformationEquation() {
-  return (
-    <section className="section equation-section" aria-labelledby="equation-title">
-      <div className="shell equation-grid">
-        <div>
-          <Eyebrow>A Strategic Operating Principle</Eyebrow>
-          <h2 id="equation-title">The transformation equation</h2>
-          <p>This is a practical way to test whether the foundations of an AI initiative are strong enough to produce business value—not a scientific formula.</p>
-        </div>
-        <div className="equation" aria-label="Vision plus Context multiplied by Adoption equals AI Success">
-          <span>Vision</span><b>+</b><span>Context</span><b>×</b><span>Adoption</span><b>=</b><strong>AI Success</strong>
-          <p>If vision, context, or adoption approaches zero, the expected value of the AI initiative approaches zero.</p>
+        <p className="method-loop"><span>Learning loop</span> Real-world learning improves future mapping and modeling.</p>
+        <div id="deliverables" className="method-output anchor-section">
+          <p className="comparison__label">The defining output</p>
+          <p>The first three workflows worth agentizing—what each needs, what the agent may do, where people remain in control, and how value will be measured.</p>
         </div>
       </div>
     </section>
   );
 }
 
-export function ContextDifferentiator() {
-  const steps = [
-    ["01", "Map", "Identify the knowledge, decisions, relationships, processes, terminology, policies, systems, and operating experience AI needs to understand."],
-    ["02", "Model", "Structure how that context connects across customers, roles, workflows, business rules, decisions, permissions, and desired outcomes."],
-    ["03", "Mobilize", "Embed the right context into AI systems, agents, workflows, decision support, and everyday business operations."],
-  ] as const;
+export function AgentActivation() {
   return (
-    <section id="context-engine" className="section section--raised anchor-section" aria-labelledby="context-title">
-      <div className="shell">
-        <div className="context-heading">
+    <section className="clarity-section clarity-agent" aria-labelledby="agent-title">
+      <HeroNetwork dark />
+      <div className="shell clarity-agent__inner">
+        <div className="clarity-heading clarity-heading--split clarity-heading--dark">
           <div>
-            <Eyebrow>Context as the Differentiator</Eyebrow>
-            <h2 id="context-title">Without business context, AI guesses.</h2>
+            <Eyebrow>From Strategy to Active Agents</Eyebrow>
+            <h2 id="agent-title">Agents should earn the right to act.</h2>
           </div>
+          <p>Agent activation should be the result of disciplined operating design—not the starting point. Authority expands only as context, controls, and performance evidence become stronger.</p>
+        </div>
+        <ol className="agent-path">
+          {agentPath.map((step, index) => <li key={step}><span>{String(index + 1).padStart(2, "0")}</span>{step}</li>)}
+        </ol>
+        <div className="autonomy">
+          <p className="autonomy__label">A controlled progression of authority</p>
           <div>
-            <p>AI models may understand general knowledge, but they do not automatically understand how your organization operates—its customers, products, policies, decisions, terminology, workflows, priorities, exceptions, or institutional history.</p>
-            <p>Context Intelligence helps leadership teams determine which knowledge matters, where it resides, how it should be organized, who should own it, and how it should support employees, workflows, and AI systems.</p>
+            {autonomyLevels.map(([name, description], index) => (
+              <article key={name}>
+                <span>{index + 1}</span>
+                <h3>{name}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
           </div>
         </div>
-        <div className="context-engine">
-          <div className="context-engine__title">
-            <p className="badge badge--blue">The Business Context Engine™</p>
-            <h3>The architecture that makes relevant organizational knowledge accessible to employees, workflows, AI systems, and decision-makers.</h3>
-          </div>
-          <div className="context-method">
-            {steps.map(([number, title, text]) => <article key={title}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}
-          </div>
-          <p className="context-engine__support">Business context creates value when it is mapped, modeled, and mobilized across the organization.</p>
-        </div>
-        <p className="thesis">AI is not the competitive advantage. <em>The business context behind it is.</em></p>
-      </div>
-    </section>
-  );
-}
-
-export function Deliverables() {
-  return (
-    <section id="services" className="section section--light services-section anchor-section" aria-labelledby="services-title">
-      <div className="shell">
-        <div className="section-heading section-heading--wide">
-          <Eyebrow dark>What Context Intelligence Delivers</Eyebrow>
-          <h2 id="services-title">Transformation architecture before technology accumulation.</h2>
-          <p>Context Intelligence helps executives determine what the organization should transform, how the components fit together, which initiatives should come first, and what capabilities are required to create lasting value.</p>
-        </div>
-        <div className="services-grid">
-          {services.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}
-        </div>
-        <p className="services-note">Context Intelligence diagnoses, designs, prioritizes, architects, and guides transformation. Technology platforms execute specific technical capabilities.</p>
       </div>
     </section>
   );
@@ -198,47 +240,61 @@ export function Deliverables() {
 
 export function Engagement() {
   return (
-    <section id="engagement" className="section anchor-section" aria-labelledby="engagement-title">
+    <section className="clarity-section clarity-engagement" aria-labelledby="engagement-title">
       <div className="shell">
-        <div className="section-heading section-heading--wide">
-          <Eyebrow>The Engagement Model</Eyebrow>
-          <h2 id="engagement-title">From AI confusion to a coordinated transformation plan.</h2>
+        <div className="clarity-heading clarity-heading--split">
+          <div>
+            <Eyebrow>Engagement Process</Eyebrow>
+            <h2 id="engagement-title">A disciplined transformation process—not another AI project plan.</h2>
+          </div>
+          <p>The engagement model is built around the same three stages used to design the transformation, so strategy and execution stay connected.</p>
         </div>
-        <div className="engagement-grid">
-          {engagementStages.map(([number, title, text, output], index) => (
-            <article key={title}>
-              <span className={index > 1 ? "is-blue" : ""}>{number}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-              <small>Output: {output}</small>
-            </article>
-          ))}
+        <div className="engagement-rows">
+          <article><span>01</span><h3>Map</h3><p>Executive alignment, discovery, workflow analysis, opportunity prioritization, and readiness assessment.</p></article>
+          <article><span>02</span><h3>Model</h3><p>Workflow redesign, context architecture, agent operating model, governance, controls, and measurement design.</p></article>
+          <article><span>03</span><h3>Mobilize</h3><p>90-day roadmap, stackable deployments, adoption, performance measurement, and expansion.</p></article>
         </div>
       </div>
     </section>
   );
 }
 
-export function ReadinessAssessment({ onAssessment }: Pick<RequestActions, "onAssessment">) {
-  const dimensions = ["Vision and executive alignment", "Process readiness", "Organizational context", "Workflow and technology architecture", "Agent and automation strategy", "Adoption and governance", "Measurement and scale"];
-  const levels = [
-    ["Exploring", "AI activity exists, but priorities, ownership, and business outcomes remain unclear."],
-    ["Coordinating", "The organization has selected priorities and early wins, but capabilities remain fragmented or difficult to scale."],
-    ["Transforming", "AI strategy, business context, workflows, governance, adoption, and measurement operate as a coordinated system."],
-  ] as const;
+export function Audience() {
   return (
-    <section id="assessment" className="section section--raised anchor-section" aria-labelledby="assessment-title">
-      <div className="shell assessment-grid">
-        <div>
-          <Eyebrow>AI Transformation Readiness Assessment</Eyebrow>
-          <h2 id="assessment-title">Is your organization ready to transform with AI—or merely experiment with it?</h2>
-          <p>The assessment evaluates whether your organization has the strategic, operational, contextual, technical, and human foundations required to turn AI investment into business value.</p>
-          <ol className="dimension-list">{dimensions.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ol>
-          <Button onClick={onAssessment}>Assess Your AI Transformation Readiness</Button>
+    <section className="clarity-section clarity-audience" aria-labelledby="audience-title">
+      <div className="shell audience-layout">
+        <div className="clarity-heading">
+          <Eyebrow>Who This Is For</Eyebrow>
+          <h2 id="audience-title">Built for leaders who know AI matters—but refuse to chase it blindly.</h2>
         </div>
-        <div className="readiness-scorecard" aria-label="AI transformation readiness maturity preview">
-          <p className="list-label">Maturity preview</p>
-          {levels.map(([title, text], index) => <article key={title} className={`readiness-level readiness-level--${index + 1}`}><div><span>Level {index + 1}</span><h3>{title}</h3></div><p>{text}</p></article>)}
+        <ul>{audiences.map((audience, index) => <li key={audience}><span>{String(index + 1).padStart(2, "0")}</span>{audience}</li>)}</ul>
+      </div>
+    </section>
+  );
+}
+
+export function Perspectives() {
+  return (
+    <section id="perspectives" className="clarity-section clarity-perspectives anchor-section" aria-labelledby="perspectives-title">
+      <div className="shell">
+        <div className="clarity-heading clarity-heading--split">
+          <div>
+            <Eyebrow>Executive Perspectives</Eyebrow>
+            <h2 id="perspectives-title">Practical thinking for leaders shaping AI transformation.</h2>
+          </div>
+          <p>Short perspectives on the decisions that determine whether AI becomes disconnected activity or measurable operating advantage.</p>
+        </div>
+        <div className="perspective-grid">
+          {perspectives.map(([category, title, summary]) => (
+            <details key={title}>
+              <summary>
+                <span>{category}</span>
+                <h3>{title}</h3>
+                <b>Read perspective <i aria-hidden="true">Expand</i></b>
+              </summary>
+              <p>{summary}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
@@ -247,16 +303,26 @@ export function ReadinessAssessment({ onAssessment }: Pick<RequestActions, "onAs
 
 export function About() {
   return (
-    <section id="about" className="section anchor-section" aria-labelledby="about-title">
-      <div className="shell about-grid">
-        <Image className="headshot" src="/assets/troy-mott.png" alt="Troy Mott, Founder and Executive Advisor" width={180} height={180} unoptimized />
+    <section id="about" className="clarity-section clarity-about anchor-section" aria-labelledby="about-title">
+      <div className="shell about-layout">
+        <div className="about-portrait">
+          <Image
+            src="/assets/troy-mott.png"
+            alt="Troy Mott, Founder and Executive Advisor"
+            width={440}
+            height={440}
+            sizes="(max-width: 820px) 72vw, 360px"
+            priority
+            unoptimized
+          />
+          <p>Troy Mott<br /><span>Founder &amp; Executive Advisor</span></p>
+        </div>
         <div>
-          <Eyebrow>Built from Experience</Eyebrow>
-          <h2 id="about-title">Built for leaders who need a practical path forward.</h2>
-          <p>Troy Mott is an executive advisor and AI operations leader with more than two decades of experience across enterprise technology, sales leadership, organizational transformation, and AI-enabled workflow design.</p>
-          <p>He founded Context Intelligence around a recurring executive challenge: organizations are rapidly adopting AI tools, but few have a complete architecture for turning those tools into coordinated, measurable, lasting transformation.</p>
-          <p>Context Intelligence helps leadership teams connect business strategy, operating processes, organizational knowledge, AI-enabled workflows, adoption, and scale.</p>
-          <p className="founder-label">Troy Mott — Founder and Executive Advisor, Context Intelligence</p>
+          <Eyebrow>About Context Intelligence</Eyebrow>
+          <h2 id="about-title">Built from a simple observation: AI fails when it is disconnected from how the business actually works.</h2>
+          <p>For more than two decades, Troy has helped organizations improve sales performance, operational execution, technology adoption, and business transformation.</p>
+          <p>Context Intelligence was created to help leaders move beyond disconnected tools and experiments—to build the strategy, context, operating model, and organizational capability required to turn AI into measurable business performance.</p>
+          <p className="about-note">An independent executive guide who translates between business priorities, workflows, technology, governance, and adoption.</p>
         </div>
       </div>
     </section>
@@ -265,14 +331,14 @@ export function About() {
 
 export function Contact({ onAssessment, onStrategy }: RequestActions) {
   return (
-    <section id="contact" className="section contact anchor-section" aria-labelledby="contact-title">
-      <div className="contact__inner">
-        <Eyebrow centered>Begin</Eyebrow>
-        <h2 id="contact-title">Stop chasing AI tools. <em>Start building the transformation.</em></h2>
-        <p>An executive strategy session will help identify where your organization currently stands, which foundations are missing, and where a disciplined AI transformation could create the greatest near-term business value.</p>
+    <section id="contact" className="clarity-section clarity-contact anchor-section" aria-labelledby="contact-title">
+      <div className="shell clarity-contact__inner">
+        <Eyebrow centered>Begin With the Business</Eyebrow>
+        <h2 id="contact-title">Before choosing another AI tool, decide what should change.</h2>
+        <p>An Executive Strategy Session will help clarify your highest-value opportunities, expose the gaps holding AI back, and determine whether a broader transformation engagement makes sense.</p>
         <div className="actions actions--center">
           <Button onClick={onStrategy}>Schedule an Executive Strategy Session</Button>
-          <Button variant="outline" onClick={onAssessment}>Assess Your AI Transformation Readiness</Button>
+          <Button variant="outline" onClick={onAssessment}>Take the 5-Minute AI Transformation Assessment</Button>
         </div>
       </div>
     </section>

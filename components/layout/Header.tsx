@@ -6,11 +6,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 const links = [
-  ["Blueprint", "/#blueprint"],
-  ["Context Engine", "/#context-engine"],
-  ["Assessment", "/#assessment"],
+  ["Why It Matters", "/#why-it-matters"],
+  ["AI Blueprint", "/#methodology"],
+  ["Perspectives", "/#perspectives"],
   ["About", "/#about"],
-  ["Contact", "/#contact"],
 ] as const;
 
 export function Header({ onRequest }: { onRequest: () => void }) {
@@ -30,7 +29,7 @@ export function Header({ onRequest }: { onRequest: () => void }) {
       <nav id="primary-nav" className={menuOpen ? "nav nav--open" : "nav"} aria-label="Primary navigation">
         {links.map(([label, href]) => <Link key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</Link>)}
       </nav>
-      <Button className="header-cta" onClick={onRequest}>Strategy Session</Button>
+      <Button className="header-cta" onClick={onRequest}>Schedule a Conversation</Button>
     </header>
   );
 }

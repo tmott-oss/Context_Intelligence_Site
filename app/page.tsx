@@ -4,7 +4,7 @@ import { MarketingSite } from "@/components/MarketingSite";
 export const metadata: Metadata = {
   title: "Context Intelligence | Organizational AI Transformation",
   description:
-    "Context Intelligence helps leadership teams move from disconnected AI experiments to coordinated business transformation through vision, process design, organizational context, AI-enabled workflows, agents, adoption, and scale.",
+    "Context Intelligence helps leadership teams identify where AI can create value, design the context and controls it needs, and mobilize a governed portfolio of workflows and agents.",
 };
 
 export default function Home() {
