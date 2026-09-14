@@ -1165,7 +1165,7 @@ h1, h2, h3 {
 
 .clarity-about { background: #fff; }
 .about-layout { display: grid; grid-template-columns: 360px 1fr; gap: clamp(58px, 8vw, 112px); align-items: center; }
-.about-portrait img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center 18%; border-radius: 50%; border: 1px solid var(--clarity-border); }
+.about-portrait img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: center 18%; border-radius: 50%; border: 1px solid var(--clarity-border); }
 .about-portrait > p { margin: 22px 0 0; color: var(--clarity-navy); font-family: var(--font-serif); font-size: 22px; }
 .about-portrait span { color: var(--clarity-slate); font-family: var(--font-sans); font-size: 13px; }
 .about-layout h2 { margin-bottom: 30px; font-size: clamp(2.45rem, 4.2vw, 3.65rem); line-height: 1.12; }
