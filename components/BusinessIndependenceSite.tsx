@@ -32,7 +32,7 @@ export function BusinessIndependenceSite() {
             <p className="badge badge--blue">Business Independence Blueprint</p>
             <h1 id="independence-title">Reduce owner dependency. <em>Increase enterprise value.</em></h1>
             <p>For founder-led and owner-dependent organizations preparing for succession, acquisition, or scale—where critical knowledge, decisions, and relationships still live with one person.</p>
-            <div className="actions"><Button variant="blue" onClick={openDialog}>Schedule an Executive Strategy Session</Button><Link className="button button--outline" href="/#blueprint">Explore AI Transformation</Link></div>
+            <div className="actions"><Button variant="blue" onClick={openDialog}>Request an Executive Strategy Session</Button><Link className="button button--outline" href="/#methodology">Explore AI Transformation</Link></div>
           </div>
         </section>
         <section className="section section--raised" aria-labelledby="independence-focus-title">
@@ -52,7 +52,7 @@ export function BusinessIndependenceSite() {
             <Eyebrow centered>Begin</Eyebrow>
             <h2 id="independence-contact-title">Build an organization that can scale, transfer, and endure.</h2>
             <p>An executive strategy session will help identify the most consequential dependencies and the practical steps required to reduce them.</p>
-            <div className="actions actions--center"><Button onClick={openDialog}>Schedule an Executive Strategy Session</Button></div>
+            <div className="actions actions--center"><Button onClick={openDialog}>Request an Executive Strategy Session</Button></div>
           </div>
         </section>
       </main>

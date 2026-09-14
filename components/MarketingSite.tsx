@@ -5,10 +5,9 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import {
   About,
-  AgentActivation,
   Audience,
   Contact,
-  Engagement,
+  ContextReadyBridge,
   Hero,
   MarketProblem,
   Methodology,
@@ -39,11 +38,10 @@ export function MarketingSite() {
         <MarketProblem />
         <PointOfView />
         <Methodology />
-        <AgentActivation />
-        <Engagement />
         <Audience />
         <Perspectives />
         <About />
+        <ContextReadyBridge />
         <Contact onAssessment={openAssessment} onStrategy={openStrategy} />
       </main>
       <Footer />

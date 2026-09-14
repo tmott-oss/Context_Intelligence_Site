@@ -10,9 +10,9 @@ export function Footer() {
           </div>
           <p>Independent executive advisory for organizational AI transformation.</p>
         </div>
-        <FooterColumn title="Transformation" links={[["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"]]} />
-        <FooterColumn title="Explore" links={[["Executive Perspectives", "/#perspectives"], ["Business Independence", "/pathways/business-independence"], ["Schedule a Conversation", "/#contact"]]} />
-        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"]]} />
+        <FooterColumn title="Transformation" links={[["AI Readiness Assessment", "/assessment"], ["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"]]} />
+        <FooterColumn title="Explore" links={[["Executive Perspectives", "/#perspectives"], ["Context Ready", "/context-ready"], ["Business Independence", "/pathways/business-independence"], ["Schedule a Conversation", "/#contact"]]} />
+        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"], ["Privacy", "/privacy"], ["Website Terms", "/terms"]]} />
       </div>
       <div className="footer__base shell">
         <span>© 2026 Context Intelligence</span>

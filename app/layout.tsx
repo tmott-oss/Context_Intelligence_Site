@@ -30,11 +30,13 @@ export const metadata: Metadata = {
     title: "Context Intelligence | Organizational AI Transformation",
     description: "Strategy first. Context built in. Business value measured.",
     type: "website",
+    images: [{ url: "/og.png", width: 1731, height: 909, alt: "Context Intelligence" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Context Intelligence | Organizational AI Transformation",
     description: "Strategy first. Context built in. Business value measured.",
+    images: ["/og.png"],
   },
 };
 

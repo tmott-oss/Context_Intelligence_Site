@@ -4,29 +4,62 @@ final result: passed
 
 ## Visual target
 
-- Selected direction: Intelligent Clarity, option 3
-- Source reference: `/Users/troymott/.codex/generated_images/019f93ea-e75a-78c1-b6ff-97f12d319ef0/call_j3RIK2gNJvonjUhFBGzbXcIU.png`
-- Browser: Google Chrome
-- Desktop implementation viewport: 1316 × 768
+- Source reference: `/Users/troymott/Downloads/Generated image 1 (1).png`
+- Source pixels: 1009 × 1559
+- Implementation: existing Context Intelligence website, preserving the approved Intelligent Clarity aesthetic
+- Desktop CSS viewport: 1280 × 800 at device scale 1
+- Desktop capture surface: 1213 × 800
+- Mobile CSS viewport and capture: 390 × 844
+- Browser: Codex in-app browser
+- Verified state: Blueprint section with `Context — The Foundation` selected
 
-## Browser-rendered evidence
+## Comparison evidence
 
-- Hero and 3D context network: `qa/implementation-hero.png`
-- Draggable eight-banner rail: `qa/implementation-carousel.png`
-- Corrected controls and inertia rail: `qa/implementation-carousel-inertia.png`
-- Consolidated AI Transformation Blueprint: `qa/implementation-blueprint.png`
-- Founder portrait: `qa/implementation-about.png`
+- Full comparison: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-implementation-qa/full-blueprint-comparison.png`
+- Full comparison pixels: 1982 × 1458
+- Focused comparison: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-implementation-qa/focused-blueprint-comparison.png`
+- Focused comparison pixels: 1848 × 784
+- Desktop hero: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-implementation-qa/desktop-home-final.jpg`
+- Desktop Blueprint: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-implementation-qa/desktop-context-final.jpg`
+- Mobile Blueprint: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-implementation-qa/mobile-context-final.jpg`
+- Simplified desktop flow: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-simplification-qa/desktop-blueprint-to-audience.jpg`
+- Simplified mobile flow: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-simplification-qa/mobile-blueprint-to-audience.jpg`
+- Simplification comparison: `/Users/troymott/Desktop/Context Intelligence/output/blueprint-simplification-qa/reference-vs-simplified-flow.png`
+- Simplification comparison pixels: 2140 × 864
+- Restored original network, desktop: `/Users/troymott/Desktop/Context Intelligence/output/original-network-restored/restored-original-network.jpg`
+- Restored original network, mobile: `/Users/troymott/Desktop/Context Intelligence/output/original-network-restored/restored-original-network-mobile.jpg`
 
-The selected source and the browser-rendered hero were reviewed together in the same comparison input. The implementation preserves the source direction: light executive layout, navy editorial typography, restrained blue and gold accents, a dimensional context network, and generous whitespace.
+The original infographic and browser-rendered implementation were reviewed together in the same full and focused comparison inputs. The implementation intentionally translates the reference into the existing light editorial system instead of reproducing the infographic as a static image.
 
-## Requested refinements
+## Visual findings
 
-- **Text overlap:** Passed. The network and labels are confined to the right side of the desktop hero, clear of the headline and primary copy.
-- **Graph visibility and depth:** Passed. The live canvas uses depth projection, rotation, depth-scaled nodes, layered connection opacity, and highlighted nodes to create a more visible 3D network.
-- **Banner interaction:** Passed. All eight banners sit in a horizontal floating rail. Previous/Next controls work, clicking a banner centers it, and pointer dragging was verified from banner 01 to banner 02 in Chrome.
-- **Blueprint consolidation:** Passed. The separate methodology and deliverables sections are now one AI Transformation Blueprint built around Map. Model. Mobilize.™ and a concise defining output.
-- **Founder photo:** Passed. Troy Mott’s supplied portrait renders in the About section with a responsive circular crop.
-- **Primary conversion path:** Passed. The hero strategy-session CTA opens the executive strategy session dialog.
+- **Positioning:** Passed. The original “AI isn’t a software project” message is restored as the primary homepage position.
+- **Canonical model:** Passed. All seven original stages appear in order: Vision, Processes, Context, AI-Enabled Workflows, AI Agents, Adoption, and Scale.
+- **Foundation emphasis:** Passed. Context is the visually emphasized third stage and expands into a dedicated dark foundation panel.
+- **Phase structure:** Passed. Map, Model, and Mobilize group the seven stages without replacing them.
+- **Success equation:** Passed. Vision + Context × Adoption = AI Success is restored as a distinct component.
+- **Aesthetic continuity:** Passed. Typography, spacing, white editorial surfaces, navy panels, restrained blue, and gold emphasis remain consistent with the current site.
+- **Desktop composition:** Passed. Phase proportions, seven-stage rail, active-state hierarchy, panel columns, and result card remain readable without horizontal page overflow.
+- **Mobile composition:** Passed. Phases stack, the stage rail scrolls horizontally, the active stage remains visible, panel content becomes a single column, and the success equation remains legible. Document width equals viewport width at 390px.
+- **Simplified page flow:** Passed. The Blueprint now moves directly from the AI Success equation to “Who This Is For.” The removed agent-activation and application-method sections no longer appear in rendered HTML at desktop or mobile widths.
+- **Original network restored:** Passed. The landing-page hero again uses the original abstract blue-and-gold point cloud, edge distribution, depth rotation, and placement.
+- **Hero balance:** Passed. The restored network supports the editorial headline without forcing an anatomical silhouette or creating horizontal overflow.
+
+## Interaction and accessibility
+
+- Stage selection works for all seven Blueprint tabs.
+- Arrow-key navigation works; Home selects Vision and End selects Scale.
+- The selected stage exposes a matching semantic tabpanel.
+- The responsive navigation opens and closes correctly.
+- The Blueprint is native semantic HTML with a tablist, tabs, tabpanel, headings, lists, and an accessible success-equation label.
+- Browser console: no warnings or errors during the final desktop and mobile passes.
+
+## Fix history
+
+- **P1 medium-desktop header clipping:** The full navigation and header CTA crowded the in-app preview width. At 1280px and below, the header now uses the responsive menu, hides the duplicate header CTA, and adds a safe right inset. The primary strategy-session CTA remains available in the hero.
+- **Simplification pass:** Removed “From Strategy to Active Agents” and “How We Apply the Blueprint,” including their unused component data and responsive styles. Post-change evidence confirms that the Blueprint’s visual ending and the following audience section remain distinct and readable.
+- **Graph direction reverted:** After reviewing the brain-shaped explorations, the original abstract graph was preferred. The original graph implementation and hero positioning were restored exactly; the approved Blueprint and simplified page flow remain unchanged.
+- No remaining P0, P1, or P2 visual issues were found in the Blueprint experience.
 
 ## Release checks
 
@@ -35,18 +68,3 @@ The selected source and the browser-rendered hero were reviewed together in the 
 - `npm test` — passed
 - Vinext production build — passed
 - Rendered HTML tests — 3 passed
-
-The build is locally verified and ready to be reviewed before production deployment.
-
-## Carousel refinement comparison
-
-- Source visual truth: `/var/folders/n7/25y626n902j7l5cn5r81vq500000gn/T/codex-clipboard-1c5ff0a2-eb4e-4351-96ce-1586922fc31b.png`
-- Implementation screenshot: `qa/implementation-carousel-inertia.png`
-- Source pixels: 1034 × 511
-- Implementation pixels: 1316 × 768
-- CSS viewport: 1316 × 768 at device scale 1
-- State: first carousel banner centered with controls and drag hint visible
-- Full-view evidence: the source and implementation were opened together in the same comparison input.
-- Focused-region evidence: the carousel control row is large enough to assess directly in the full capture, so a second crop was not needed.
-
-The earlier P1 overlap placed the helper text beneath the counter and buttons. The controls now participate in normal document flow, and the helper text sits on its own centered line with a consistent 16px gap. Typography, spacing, colors, card elevation, copy, and image quality remain aligned with the selected Intelligent Clarity direction. The rail now records drag velocity, applies bounded deceleration, disables scroll snapping while moving, and settles on the nearest card.
