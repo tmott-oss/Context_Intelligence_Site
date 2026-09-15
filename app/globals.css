@@ -785,7 +785,33 @@ h1, h2, h3 {
   box-shadow: 0 22px 54px rgba(16, 35, 63, .11);
   transform: translateY(-7px) scale(1);
 }
-.problem-card__copy { min-height: 290px; padding: 44px 46px; }
+.problem-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid var(--clarity-border);
+  background: var(--clarity-dark);
+}
+.problem-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, rgba(12, 23, 41, .2));
+  pointer-events: none;
+}
+.problem-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.92) contrast(1.02);
+  transform: scale(1.01);
+  transition: filter 320ms var(--ease), transform 520ms var(--ease);
+}
+.problem-card.is-active .problem-card__media img {
+  filter: saturate(1) contrast(1.02);
+  transform: scale(1.035);
+}
+.problem-card__copy { min-height: 270px; padding: 38px 46px 42px; }
 .problem-card__copy > span {
   color: var(--clarity-gold);
   font-family: var(--font-mono);
@@ -1496,7 +1522,7 @@ h1, h2, h3 {
   .problem-carousel { margin-inline: -18px; padding-bottom: 8px; }
   .problem-carousel__track { gap: 14px; padding-inline: 18px; }
   .problem-card { flex-basis: calc(100vw - 36px); }
-  .problem-card__copy { min-height: 340px; padding: 30px 24px; }
+  .problem-card__copy { min-height: 300px; padding: 28px 24px 32px; }
   .problem-carousel__hint { padding-inline: 18px; }
   .comparison article { padding: 30px 22px; }
   .blueprint-system__guidance { text-align: left; }

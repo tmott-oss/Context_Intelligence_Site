@@ -1,16 +1,17 @@
 "use client";
 
 import { PointerEvent, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const problems = [
-  ["01", "Different departments pursuing unrelated AI tools", "Local experimentation grows, but the organization never develops a shared direction."],
-  ["02", "Experiments that never reach production", "Promising ideas stall because ownership, integration, governance, or adoption was never designed."],
-  ["03", "Automating tasks without redesigning workflows", "Faster individual tasks do not automatically improve the complete business outcome."],
-  ["04", "Generic AI output disconnected from the business", "The technology lacks the terminology, rules, history, and operating context required for reliable results."],
-  ["05", "Unclear ownership and governance", "Teams cannot make consistent decisions about priorities, risk, investment, or accountability."],
-  ["06", "Employees bypassing approved systems", "Tools are introduced without enough trust, enablement, reinforcement, or fit with everyday work."],
-  ["07", "No shared measurement of business value", "Activity is counted, but impact on growth, execution, customers, or productivity remains unclear."],
-  ["08", "Leadership unable to distinguish activity from progress", "More experiments and licenses create motion without producing a coordinated transformation."],
+  ["01", "Different departments pursuing unrelated AI tools", "Local experimentation grows, but the organization never develops a shared direction.", "/images/carousel/01-disconnected-ai-tools.jpg"],
+  ["02", "Experiments that never reach production", "Promising ideas stall because ownership, integration, governance, or adoption was never designed.", "/images/carousel/02-prototype-production-gap.jpg"],
+  ["03", "Automating tasks without redesigning workflows", "Faster individual tasks do not automatically improve the complete business outcome.", "/images/carousel/03-fast-task-slow-workflow.jpg"],
+  ["04", "Generic AI output disconnected from the business", "The technology lacks the terminology, rules, history, and operating context required for reliable results.", "/images/carousel/04-context-gap.jpg"],
+  ["05", "Unclear ownership and governance", "Teams cannot make consistent decisions about priorities, risk, investment, or accountability.", "/images/carousel/05-unclear-ownership.jpg"],
+  ["06", "Employees bypassing approved systems", "Tools are introduced without enough trust, enablement, reinforcement, or fit with everyday work.", "/images/carousel/06-shadow-ai-workarounds.jpg"],
+  ["07", "No shared measurement of business value", "Activity is counted, but impact on growth, execution, customers, or productivity remains unclear.", "/images/carousel/07-conflicting-metrics.jpg"],
+  ["08", "Leadership unable to distinguish activity from progress", "More experiments and licenses create motion without producing a coordinated transformation.", "/images/carousel/08-activity-without-progress.jpg"],
 ] as const;
 
 export function MarketProblemCarousel() {
@@ -158,7 +159,7 @@ export function MarketProblemCarousel() {
         }}
       >
         <div className="problem-carousel__track">
-          {problems.map(([number, title, text], index) => (
+          {problems.map(([number, title, text, image], index) => (
             <article
               data-problem-index={index}
               className={`problem-card${index === active ? " is-active" : ""}`}
@@ -166,6 +167,16 @@ export function MarketProblemCarousel() {
               onClick={() => !moved.current && scrollToIndex(index)}
               aria-current={index === active ? "true" : undefined}
             >
+              <div className="problem-card__media" aria-hidden="true">
+                <Image
+                  src={image}
+                  alt=""
+                  width={1672}
+                  height={941}
+                  sizes="(max-width: 560px) calc(100vw - 36px), min(620px, 66vw)"
+                  unoptimized
+                />
+              </div>
               <div className="problem-card__copy">
                 <span>{number}</span>
                 <h3>{title}</h3>
