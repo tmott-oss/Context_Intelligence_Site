@@ -2,17 +2,76 @@ import { NextResponse } from "next/server";
 
 const allowedInterests = new Set(["assessment", "strategy", "context-ready"]);
 const allowedStatuses = new Set(["started", "completed"]);
+const hubspotPortalIdPattern = /^\d+$/;
+const hubspotFormIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function text(value: unknown, max = 2000) {
   return typeof value === "string" ? value.trim().slice(0, max) : undefined;
 }
 
-export async function POST(request: Request) {
-  const endpoint = process.env.LEAD_ENDPOINT;
-  if (!endpoint) {
-    return NextResponse.json({ message: "Lead delivery is not configured." }, { status: 503 });
+function assessmentMessage(lead: Record<string, unknown>) {
+  const status = lead.assessmentStatus === "completed" ? "Completed" : "Started";
+  const lines = [
+    "AI Transformation Readiness Assessment",
+    `Status: ${status}`,
+    lead.assessmentPattern ? `Operating pattern: ${lead.assessmentPattern}` : undefined,
+    lead.assessmentStrength ? `Strongest system: ${lead.assessmentStrength}` : undefined,
+    lead.assessmentPriority ? `Priority system: ${lead.assessmentPriority}` : undefined,
+  ];
+
+  const scores = lead.assessmentScores as Record<string, number> | undefined;
+  if (scores && Object.keys(scores).length) {
+    lines.push(
+      "Seven-system scores (1-4):",
+      ...Object.entries(scores).map(([system, score]) => `${system.replaceAll("-", " ")}: ${score}`),
+    );
   }
 
+  return lines.filter(Boolean).join("\n");
+}
+
+async function submitAssessmentToHubSpot(lead: Record<string, unknown>) {
+  const portalId = process.env.HUBSPOT_PORTAL_ID;
+  const formId = process.env.HUBSPOT_ASSESSMENT_FORM_ID;
+  if (!portalId || !formId || !hubspotPortalIdPattern.test(portalId) || !hubspotFormIdPattern.test(formId)) {
+    return NextResponse.json({ message: "Assessment delivery is not configured." }, { status: 503 });
+  }
+
+  const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+  const fields = [
+    ["firstname", lead.firstName],
+    ["lastname", lead.lastName],
+    ["email", lead.email],
+    ["company", lead.organization],
+    ["jobtitle", lead.title],
+    ["phone", lead.phone],
+    ["message", assessmentMessage(lead)],
+  ].map(([name, value]) => ({ objectTypeId: "0-1", name, value }));
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fields,
+        submittedAt: String(Date.now()),
+        context: {
+          pageName: lead.assessmentStatus === "completed"
+            ? "AI Transformation Readiness Assessment — Completed"
+            : "AI Transformation Readiness Assessment — Started",
+          pageUri: `${process.env.NEXT_PUBLIC_SITE_URL || "https://contextintelligence.io"}/assessment`,
+        },
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!response.ok) throw new Error("HubSpot rejected the assessment submission.");
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ message: "The assessment could not be delivered." }, { status: 502 });
+  }
+}
+
+export async function POST(request: Request) {
   let input: Record<string, unknown>;
   try {
     input = await request.json() as Record<string, unknown>;
@@ -21,6 +80,8 @@ export async function POST(request: Request) {
   }
 
   const name = text(input.name, 160);
+  const firstName = text(input.firstName, 80);
+  const lastName = text(input.lastName, 80);
   const email = text(input.email, 320);
   const interest = text(input.interest, 40);
   if (!name || !email || !/^\S+@\S+\.\S+$/.test(email) || !interest || !allowedInterests.has(interest)) {
@@ -38,6 +99,8 @@ export async function POST(request: Request) {
 
   const lead = {
     name,
+    firstName,
+    lastName,
     email,
     interest,
     organization: text(input.organization, 200),
@@ -60,6 +123,18 @@ export async function POST(request: Request) {
     submittedAt: new Date().toISOString(),
     source: "context-intelligence-site",
   };
+
+  if (interest === "assessment") {
+    if (!firstName || !lastName || !lead.organization || !lead.title || !lead.phone) {
+      return NextResponse.json({ message: "Required assessment contact information is missing." }, { status: 400 });
+    }
+    return submitAssessmentToHubSpot(lead);
+  }
+
+  const endpoint = process.env.LEAD_ENDPOINT;
+  if (!endpoint) {
+    return NextResponse.json({ message: "Lead delivery is not configured." }, { status: 503 });
+  }
 
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (process.env.LEAD_ENDPOINT_BEARER_TOKEN) {

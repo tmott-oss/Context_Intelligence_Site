@@ -42,7 +42,7 @@ test("server-renders the seven-system readiness assessment", async () => {
   const html = await response.text();
   assert.match(html, /AI Transformation Readiness Assessment/i);
   assert.match(html, /Begin the Assessment/i);
-  assert.match(html, /Company name[\s\S]*Title[\s\S]*Business email[\s\S]*Phone number/i);
+  assert.match(html, /First name[\s\S]*Last name[\s\S]*Company name[\s\S]*Title[\s\S]*Business email[\s\S]*Phone number/i);
   assert.match(html, /Vision[\s\S]*Processes[\s\S]*Context[\s\S]*AI-Enabled Workflows[\s\S]*AI Agents[\s\S]*Adoption[\s\S]*Scale/);
 });
 
@@ -63,7 +63,16 @@ test("lead relay stays closed when no destination is configured", async () => {
     new Request("http://localhost/api/lead", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ name: "Test", email: "test@example.com", interest: "assessment" }),
+      body: JSON.stringify({
+        name: "Integration Test",
+        firstName: "Integration",
+        lastName: "Test",
+        organization: "Example Company",
+        title: "Tester",
+        phone: "+1 555 555 0123",
+        email: "test@example.com",
+        interest: "assessment",
+      }),
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },

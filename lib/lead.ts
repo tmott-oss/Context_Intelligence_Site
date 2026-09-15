@@ -1,5 +1,7 @@
 export type Lead = {
   name: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   organization?: string;
   title?: string;

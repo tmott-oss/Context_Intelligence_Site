@@ -113,7 +113,7 @@ const patterns = [
 export function AssessmentSite() {
   const assessmentId = useId();
   const [started, setStarted] = useState(false);
-  const [contact, setContact] = useState({ name: "", organization: "", title: "", email: "", phone: "" });
+  const [contact, setContact] = useState({ firstName: "", lastName: "", organization: "", title: "", email: "", phone: "" });
   const [contactErrors, setContactErrors] = useState<Partial<Record<keyof typeof contact, string>>>({});
   const [contactStatus, setContactStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [contactMessage, setContactMessage] = useState("");
@@ -134,7 +134,8 @@ export function AssessmentSite() {
   const beginAssessment = async (event: FormEvent) => {
     event.preventDefault();
     const errors: Partial<Record<keyof typeof contact, string>> = {};
-    if (!contact.name.trim()) errors.name = "Enter your name.";
+    if (!contact.firstName.trim()) errors.firstName = "Enter your first name.";
+    if (!contact.lastName.trim()) errors.lastName = "Enter your last name.";
     if (!contact.organization.trim()) errors.organization = "Enter your company name.";
     if (!contact.title.trim()) errors.title = "Enter your title.";
     if (!/^\S+@\S+\.\S+$/.test(contact.email)) errors.email = "Enter a valid business email.";
@@ -144,7 +145,9 @@ export function AssessmentSite() {
 
     setContactStatus("submitting");
     const submission = await submitLead({
-      name: contact.name.trim(),
+      name: `${contact.firstName.trim()} ${contact.lastName.trim()}`,
+      firstName: contact.firstName.trim(),
+      lastName: contact.lastName.trim(),
       organization: contact.organization.trim(),
       title: contact.title.trim(),
       email: contact.email.trim(),
@@ -191,7 +194,9 @@ export function AssessmentSite() {
     const pattern = patterns.find((item) => total <= item.max) ?? patterns[patterns.length - 1];
     setResultDelivery("sending");
     const submission = await submitLead({
-      name: contact.name.trim(),
+      name: `${contact.firstName.trim()} ${contact.lastName.trim()}`,
+      firstName: contact.firstName.trim(),
+      lastName: contact.lastName.trim(),
       organization: contact.organization.trim(),
       title: contact.title.trim(),
       email: contact.email.trim(),
@@ -256,9 +261,14 @@ export function AssessmentSite() {
                   </div>
                   <div className="assessment-contact__grid">
                     <label className="field">
-                      <span>Name</span>
-                      <input type="text" autoComplete="name" value={contact.name} placeholder="Full name" aria-invalid={Boolean(contactErrors.name)} onChange={(event) => updateContact("name", event.target.value)} />
-                      {contactErrors.name && <small role="alert">{contactErrors.name}</small>}
+                      <span>First name</span>
+                      <input type="text" autoComplete="given-name" value={contact.firstName} placeholder="First name" aria-invalid={Boolean(contactErrors.firstName)} onChange={(event) => updateContact("firstName", event.target.value)} />
+                      {contactErrors.firstName && <small role="alert">{contactErrors.firstName}</small>}
+                    </label>
+                    <label className="field">
+                      <span>Last name</span>
+                      <input type="text" autoComplete="family-name" value={contact.lastName} placeholder="Last name" aria-invalid={Boolean(contactErrors.lastName)} onChange={(event) => updateContact("lastName", event.target.value)} />
+                      {contactErrors.lastName && <small role="alert">{contactErrors.lastName}</small>}
                     </label>
                     <label className="field">
                       <span>Company name</span>
@@ -275,7 +285,7 @@ export function AssessmentSite() {
                       <input type="email" autoComplete="email" value={contact.email} placeholder="you@company.com" aria-invalid={Boolean(contactErrors.email)} onChange={(event) => updateContact("email", event.target.value)} />
                       {contactErrors.email && <small role="alert">{contactErrors.email}</small>}
                     </label>
-                    <label className="field assessment-contact__phone">
+                    <label className="field">
                       <span>Phone number</span>
                       <input type="tel" autoComplete="tel" value={contact.phone} placeholder="(555) 555-0123" aria-invalid={Boolean(contactErrors.phone)} onChange={(event) => updateContact("phone", event.target.value)} />
                       {contactErrors.phone && <small role="alert">{contactErrors.phone}</small>}
