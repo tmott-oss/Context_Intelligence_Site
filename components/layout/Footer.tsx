@@ -8,15 +8,15 @@ export function Footer() {
           <div className="footer__logo-crop">
             <Image src="/assets/logo-full.png" alt="Context Intelligence" width={300} height={110} unoptimized />
           </div>
-          <p>The executive advisory practice for building organizational intelligence into a strategic asset.</p>
+          <p>Independent executive advisory for organizational AI transformation.</p>
         </div>
-        <FooterColumn title="Discipline" links={[["Organizational Intelligence", "#asset"], ["The methodology", "#methodology"], ["Process", "#process"]]} />
-        <FooterColumn title="Engagements" links={[["AI Transformation Blueprint", "#pathway-ai"], ["Business Independence Blueprint", "#pathway-bi"], ["Assessment", "#assessment"]]} />
-        <FooterColumn title="Firm" links={[["About", "#about"], ["Contact", "#contact"], ["Graph Lab", "/graph-lab"]]} />
+        <FooterColumn title="Transformation" links={[["AI Readiness Assessment", "/assessment"], ["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"]]} />
+        <FooterColumn title="Explore" links={[["Executive Perspectives", "/#perspectives"], ["Context Ready", "/context-ready"], ["Business Independence", "/pathways/business-independence"], ["Schedule a Conversation", "/#contact"]]} />
+        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"], ["Privacy", "/privacy"], ["Website Terms", "/terms"]]} />
       </div>
       <div className="footer__base shell">
         <span>© 2026 Context Intelligence</span>
-        <span>Capture. Connect. Activate. <b>Advantage.</b></span>
+        <span>Strategy first. Context built in. <b>Business value measured.</b></span>
       </div>
     </footer>
   );

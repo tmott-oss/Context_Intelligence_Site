@@ -1,23 +1,33 @@
 export type Lead = {
   name: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  organization: string;
+  organization?: string;
+  title?: string;
+  phone?: string;
+  assessmentId?: string;
+  assessmentStatus?: "started" | "completed";
+  assessmentPattern?: string;
+  assessmentPriority?: string;
+  assessmentStrength?: string;
+  assessmentScores?: Record<string, number>;
+  interest?: "assessment" | "strategy" | "context-ready";
+  platform?: string;
+  profileUrl?: string;
+  expertise?: string;
+  audienceSize?: string;
+  productIdea?: string;
+  audienceQuestions?: string;
+  promotionWillingness?: string;
+  additionalInfo?: string;
 };
 
 export type LeadResult = { ok: true } | { ok: false; message: string };
 
 export async function submitLead(lead: Lead): Promise<LeadResult> {
-  const endpoint = process.env.NEXT_PUBLIC_LEAD_ENDPOINT;
-
-  if (!endpoint) {
-    return {
-      ok: false,
-      message: "Lead capture is ready for connection, but no submission destination is configured yet.",
-    };
-  }
-
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(lead),

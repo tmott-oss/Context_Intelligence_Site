@@ -10,12 +10,15 @@ export const metadata: Metadata = {
     template: "%s | Context Intelligence",
   },
   description:
-    "The executive advisory practice for building organizational intelligence into a strategic asset.",
+    "Independent executive advisory for organizational AI transformation—strategy, context, workflow redesign, governance, adoption, and measurable business outcomes.",
   keywords: [
-    "organizational intelligence",
+    "organizational AI transformation",
+    "AI Transformation Blueprint",
     "AI transformation strategy",
-    "knowledge architecture",
-    "business independence",
+    "business context architecture",
+    "AI readiness assessment",
+    "AI-enabled workflow design",
+    "AI agent strategy",
     "executive advisory",
   ],
   icons: {
@@ -24,15 +27,15 @@ export const metadata: Metadata = {
     apple: "/assets/logo-mark.png",
   },
   openGraph: {
-    title: "Context Intelligence",
-    description: "AI is not the competitive advantage. Context is.",
+    title: "Context Intelligence | Organizational AI Transformation",
+    description: "Strategy first. Context built in. Business value measured.",
     type: "website",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "AI is not the competitive advantage. Context is." }],
+    images: [{ url: "/og.png", width: 1731, height: 909, alt: "Context Intelligence" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Context Intelligence",
-    description: "Capture. Connect. Activate. Advantage.",
+    title: "Context Intelligence | Organizational AI Transformation",
+    description: "Strategy first. Context built in. Business value measured.",
     images: ["/og.png"],
   },
 };
@@ -40,7 +43,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0A0F1E",
+  themeColor: "#F8FAFC",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
