@@ -30,45 +30,93 @@ function assessmentMessage(lead: Record<string, unknown>) {
   return lines.filter(Boolean).join("\n");
 }
 
-async function submitAssessmentToHubSpot(lead: Record<string, unknown>) {
+function strategyMessage() {
+  return [
+    "Executive Strategy Session Request",
+    "Source: Context Intelligence website",
+  ].join("\n");
+}
+
+async function submitToHubSpot({
+  formId,
+  fields,
+  pageName,
+  pagePath,
+  unavailableMessage,
+  failureMessage,
+}: {
+  formId: string | undefined;
+  fields: Array<[string, unknown]>;
+  pageName: string;
+  pagePath: string;
+  unavailableMessage: string;
+  failureMessage: string;
+}) {
   const portalId = process.env.HUBSPOT_PORTAL_ID;
-  const formId = process.env.HUBSPOT_ASSESSMENT_FORM_ID;
   if (!portalId || !formId || !hubspotPortalIdPattern.test(portalId) || !hubspotFormIdPattern.test(formId)) {
-    return NextResponse.json({ message: "Assessment delivery is not configured." }, { status: 503 });
+    return NextResponse.json({ message: unavailableMessage }, { status: 503 });
   }
 
   const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
-  const fields = [
-    ["firstname", lead.firstName],
-    ["lastname", lead.lastName],
-    ["email", lead.email],
-    ["company", lead.organization],
-    ["jobtitle", lead.title],
-    ["phone", lead.phone],
-    ["message", assessmentMessage(lead)],
-  ].map(([name, value]) => ({ objectTypeId: "0-1", name, value }));
+  const hubspotFields = fields.map(([name, value]) => ({ objectTypeId: "0-1", name, value }));
 
   try {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        fields,
+        fields: hubspotFields,
         submittedAt: String(Date.now()),
         context: {
-          pageName: lead.assessmentStatus === "completed"
-            ? "AI Transformation Readiness Assessment — Completed"
-            : "AI Transformation Readiness Assessment — Started",
-          pageUri: `${process.env.NEXT_PUBLIC_SITE_URL || "https://contextintelligence.io"}/assessment`,
+          pageName,
+          pageUri: `${process.env.NEXT_PUBLIC_SITE_URL || "https://contextintelligence.io"}${pagePath}`,
         },
       }),
       signal: AbortSignal.timeout(10_000),
     });
-    if (!response.ok) throw new Error("HubSpot rejected the assessment submission.");
+    if (!response.ok) throw new Error("HubSpot rejected the form submission.");
     return NextResponse.json({ ok: true });
   } catch {
-    return NextResponse.json({ message: "The assessment could not be delivered." }, { status: 502 });
+    return NextResponse.json({ message: failureMessage }, { status: 502 });
   }
+}
+
+async function submitAssessmentToHubSpot(lead: Record<string, unknown>) {
+  return submitToHubSpot({
+    formId: process.env.HUBSPOT_ASSESSMENT_FORM_ID,
+    fields: [
+      ["firstname", lead.firstName],
+      ["lastname", lead.lastName],
+      ["email", lead.email],
+      ["company", lead.organization],
+      ["jobtitle", lead.title],
+      ["phone", lead.phone],
+      ["message", assessmentMessage(lead)],
+    ],
+    pageName: lead.assessmentStatus === "completed"
+      ? "AI Transformation Readiness Assessment — Completed"
+      : "AI Transformation Readiness Assessment — Started",
+    pagePath: "/assessment",
+    unavailableMessage: "Assessment delivery is not configured.",
+    failureMessage: "The assessment could not be delivered.",
+  });
+}
+
+async function submitStrategyToHubSpot(lead: Record<string, unknown>) {
+  return submitToHubSpot({
+    formId: process.env.HUBSPOT_STRATEGY_FORM_ID,
+    fields: [
+      ["firstname", lead.firstName],
+      ["lastname", lead.lastName],
+      ["email", lead.email],
+      ["company", lead.organization],
+      ["message", strategyMessage()],
+    ],
+    pageName: "Executive Strategy Session Request",
+    pagePath: "/#contact",
+    unavailableMessage: "Strategy session delivery is not configured.",
+    failureMessage: "The strategy session request could not be delivered.",
+  });
 }
 
 export async function POST(request: Request) {
@@ -129,6 +177,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Required assessment contact information is missing." }, { status: 400 });
     }
     return submitAssessmentToHubSpot(lead);
+  }
+
+  if (interest === "strategy") {
+    if (!firstName || !lastName || !lead.organization) {
+      return NextResponse.json({ message: "Required strategy session contact information is missing." }, { status: 400 });
+    }
+    return submitStrategyToHubSpot(lead);
   }
 
   const endpoint = process.env.LEAD_ENDPOINT;

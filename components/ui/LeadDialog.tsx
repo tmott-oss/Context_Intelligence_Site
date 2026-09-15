@@ -8,6 +8,8 @@ export type LeadIntent = "assessment" | "strategy" | "context-ready";
 
 type FieldName =
   | "name"
+  | "firstName"
+  | "lastName"
   | "email"
   | "organization"
   | "platform"
@@ -23,6 +25,8 @@ type Fields = Record<FieldName, string>;
 
 const initialFields: Fields = {
   name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   organization: "",
   platform: "",
@@ -95,7 +99,12 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const nextErrors: Partial<Record<FieldName, string>> = {};
-    if (!fields.name.trim()) nextErrors.name = "Enter your name.";
+    if (isContextReady) {
+      if (!fields.name.trim()) nextErrors.name = "Enter your name.";
+    } else {
+      if (!fields.firstName.trim()) nextErrors.firstName = "Enter your first name.";
+      if (!fields.lastName.trim()) nextErrors.lastName = "Enter your last name.";
+    }
     if (!/^\S+@\S+\.\S+$/.test(fields.email)) nextErrors.email = "Enter a valid email.";
 
     if (isContextReady) {
@@ -137,7 +146,9 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
             additionalInfo: fields.additionalInfo.trim(),
           }
         : {
-            name: fields.name.trim(),
+            name: `${fields.firstName.trim()} ${fields.lastName.trim()}`,
+            firstName: fields.firstName.trim(),
+            lastName: fields.lastName.trim(),
             email: fields.email.trim(),
             organization: fields.organization.trim(),
             interest: intent,
@@ -177,21 +188,38 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
             <h2 id={titleId}>{title}</h2>
             <p id={descriptionId} className="dialog__intro">{intro}</p>
             <form onSubmit={handleSubmit} noValidate>
-              <div className={isContextReady ? "dialog__field-grid" : undefined}>
-                {(["name", "email"] as const).map((field) => {
-                  const labels = { name: "Name", email: isContextReady ? "Email" : "Work email" };
-                  const placeholders = { name: "Full name", email: "you@example.com" };
-                  return (
-                    <label className="field" key={field}>
-                      <span>{labels[field]}</span>
-                      <input type={field === "email" ? "email" : "text"} autoComplete={field === "name" ? "name" : "email"} value={fields[field]} placeholder={placeholders[field]} aria-invalid={Boolean(errors[field])} onChange={(event) => updateField(field, event.target.value)} />
-                      {errors[field] && <small role="alert">{errors[field]}</small>}
+              <div className="dialog__field-grid">
+                {isContextReady ? (
+                  (["name", "email"] as const).map((field) => {
+                    const labels = { name: "Name", email: "Email" };
+                    const placeholders = { name: "Full name", email: "you@example.com" };
+                    return (
+                      <label className="field" key={field}>
+                        <span>{labels[field]}</span>
+                        <input type={field === "email" ? "email" : "text"} autoComplete={field === "name" ? "name" : "email"} value={fields[field]} placeholder={placeholders[field]} aria-invalid={Boolean(errors[field])} onChange={(event) => updateField(field, event.target.value)} />
+                        {errors[field] && <small role="alert">{errors[field]}</small>}
+                      </label>
+                    );
+                  })
+                ) : (
+                  <>
+                    {(["firstName", "lastName"] as const).map((field) => (
+                      <label className="field" key={field}>
+                        <span>{field === "firstName" ? "First name" : "Last name"}</span>
+                        <input type="text" autoComplete={field === "firstName" ? "given-name" : "family-name"} value={fields[field]} placeholder={field === "firstName" ? "First name" : "Last name"} aria-invalid={Boolean(errors[field])} onChange={(event) => updateField(field, event.target.value)} />
+                        {errors[field] && <small role="alert">{errors[field]}</small>}
+                      </label>
+                    ))}
+                    <label className="field">
+                      <span>Work email</span>
+                      <input type="email" autoComplete="email" value={fields.email} placeholder="you@company.com" aria-invalid={Boolean(errors.email)} onChange={(event) => updateField("email", event.target.value)} />
+                      {errors.email && <small role="alert">{errors.email}</small>}
                     </label>
-                  );
-                })}
+                  </>
+                )}
                 {!isContextReady && (
                   <label className="field">
-                    <span>Organization</span>
+                    <span>Company name</span>
                     <input type="text" autoComplete="organization" value={fields.organization} placeholder="Company" aria-invalid={Boolean(errors.organization)} onChange={(event) => updateField("organization", event.target.value)} />
                     {errors.organization && <small role="alert">{errors.organization}</small>}
                   </label>
