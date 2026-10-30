@@ -20,16 +20,20 @@ test("server-renders the Context Intelligence marketing site", async () => {
 
   const html = await response.text();
   assert.match(html, /Context Intelligence/);
-  assert.match(html, /AI isn(?:&apos;|&#x27;|’)t a software project/i);
-  assert.match(html, /Organizational AI Transformation/);
+  assert.match(html, /Scale makes inefficiency expensive/);
+  assert.match(html, /Who we help/);
+  assert.match(html, /Enterprise[\s\S]*Local Business[\s\S]*Creators \(Context Ready\)/);
+  assert.match(html, /AI transformation for organizations where scale makes inefficiency expensive/);
+  assert.match(html, /Practical systems, automation and AI that take work off the owner(?:'|&#x27;|&apos;)s plate/);
+  assert.match(html, /Turn expertise and audiences into products people can buy/);
+  assert.match(html, /href="\/local-business"/);
   assert.match(html, /AI Transformation Blueprint/);
   assert.match(html, /Vision[\s\S]*Processes[\s\S]*Context[\s\S]*AI-Enabled Workflows[\s\S]*AI Agents[\s\S]*Adoption[\s\S]*Scale/);
   assert.match(html, /Map[\s\S]*Model[\s\S]*Mobilize/);
   assert.match(html, /Vision plus context multiplied by adoption equals AI success/i);
-  assert.match(html, /Turn your expertise into a product your audience can use—and buy/i);
   assert.match(html, /href="\/context-ready"/);
   assert.match(html, /href="\/assessment"/);
-  assert.match(html, /Take the 5-Minute Assessment/i);
+  assert.match(html, /Take the 5-Minute AI Transformation Assessment/i);
   assert.doesNotMatch(html, /From Strategy to Active Agents|Agents should earn the right to act/i);
   assert.doesNotMatch(html, /How We Apply the Blueprint|These three phases define how Context Intelligence guides the work/i);
   assert.doesNotMatch(html, /Capture[\s\S]{0,12}Connect[\s\S]{0,12}Activate|Organizational Intelligence Flywheel/i);
@@ -78,6 +82,28 @@ test("lead relay stays closed when no destination is configured", async () => {
     { waitUntil() {}, passThroughOnException() {} },
   );
   assert.equal(response.status, 503);
+});
+
+test("server-renders the local business page without result claims", async () => {
+  const response = await render("/local-business");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<title>Local Business \| Context Intelligence<\/title>/i);
+  assert.match(html, /Your business probably has 10 hours of work every week that nobody should be doing manually/);
+  assert.match(html, /We find it\. We fix it\./);
+  assert.match(html, /Why are we missing calls\?/);
+  assert.match(html, /Find Out What(?:'|&#x27;|&apos;)s Wasting Your Time/);
+  assert.match(html, /id="outcomes"/);
+  assert.match(html, /See What We Can Fix/);
+  assert.match(html, /Example implementations/);
+  assert.match(html, /A delivery and hauling operation/);
+  assert.match(html, /A multi-location restaurant business/);
+  assert.match(html, /Type of business \(optional\)/);
+  assert.match(html, /Restaurant[\s\S]*Home services[\s\S]*Delivery\/Hauling[\s\S]*Salon[\s\S]*Automotive[\s\S]*Professional services[\s\S]*Other/);
+  assert.match(html, /Not sure what AI could actually do for your business\?/);
+  assert.match(html, /Photograph to be added/);
+  assert.doesNotMatch(html, /\[RESULT|case stud|testimonial|before-and-after/i);
+  assert.doesNotMatch(html, /unlock|supercharge|seamless|game-changer|revolutionize|leverage/i);
 });
 
 test("server-renders the Context Ready creator partnership page", async () => {

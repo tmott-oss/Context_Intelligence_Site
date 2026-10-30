@@ -3,12 +3,10 @@ import { ContextReadySite } from "@/components/ContextReadySite";
 
 export const metadata: Metadata = {
   title: { absolute: "Context Ready | The Creator Product Studio" },
-  description:
-    "Context Ready partners with creators and subject-matter experts to transform trusted expertise into structured, market-ready digital products.",
+  description: "Turn expertise and audiences into products people can buy.",
   openGraph: {
     title: "Context Ready | The Creator Product Studio",
-    description:
-      "Context Ready partners with creators and subject-matter experts to transform trusted expertise into structured, market-ready digital products.",
+    description: "Turn expertise and audiences into products people can buy.",
     type: "website",
     images: [
       {
@@ -22,8 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Context Ready | The Creator Product Studio",
-    description:
-      "Context Ready partners with creators and subject-matter experts to transform trusted expertise into structured, market-ready digital products.",
+    description: "Turn expertise and audiences into products people can buy.",
     images: ["/context-ready-og.png"],
   },
 };

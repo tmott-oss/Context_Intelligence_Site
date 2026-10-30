@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <p className="legal-page__updated">Last updated September 13, 2026</p>
         <section>
           <h2>Information you provide</h2>
-          <p>When you submit an assessment request, strategy-session request, or Context Ready application, Context Intelligence receives the information you enter in that form. The information is used to review and respond to your request.</p>
+          <p>When you submit an assessment request, strategy-session request, local business inquiry, or Context Ready application, Context Intelligence receives the information you enter in that form. The information is used to review and respond to your request.</p>
         </section>
         <section>
           <h2>The readiness assessment</h2>

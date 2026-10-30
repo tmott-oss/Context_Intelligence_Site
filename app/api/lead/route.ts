@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const allowedInterests = new Set(["assessment", "strategy", "context-ready"]);
+const allowedInterests = new Set(["assessment", "strategy", "context-ready", "local-business"]);
 const allowedStatuses = new Set(["started", "completed"]);
 const hubspotPortalIdPattern = /^\d+$/;
 const hubspotFormIdPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -30,11 +30,17 @@ function assessmentMessage(lead: Record<string, unknown>) {
   return lines.filter(Boolean).join("\n");
 }
 
-function strategyMessage() {
-  return [
-    "Executive Strategy Session Request",
+function strategyMessage(lead: Record<string, unknown>) {
+  const lines = [
+    lead.interest === "local-business"
+      ? "Local business: Find Out What's Wasting Your Time"
+      : "Executive Strategy Session Request",
     "Source: Context Intelligence website",
-  ].join("\n");
+  ];
+  if (typeof lead.businessType === "string" && lead.businessType) {
+    lines.push(`Type of business: ${lead.businessType}`);
+  }
+  return lines.join("\n");
 }
 
 async function submitToHubSpot({
@@ -110,10 +116,10 @@ async function submitStrategyToHubSpot(lead: Record<string, unknown>) {
       ["lastname", lead.lastName],
       ["email", lead.email],
       ["company", lead.organization],
-      ["message", strategyMessage()],
+      ["message", strategyMessage(lead)],
     ],
-    pageName: "Executive Strategy Session Request",
-    pagePath: "/#contact",
+    pageName: lead.interest === "local-business" ? "Local Business: Find Out What's Wasting Your Time" : "Executive Strategy Session Request",
+    pagePath: lead.interest === "local-business" ? "/local-business" : "/#contact",
     unavailableMessage: "Strategy session delivery is not configured.",
     failureMessage: "The strategy session request could not be delivered.",
   });
@@ -162,6 +168,7 @@ export async function POST(request: Request) {
     audienceQuestions: text(input.audienceQuestions),
     promotionWillingness: text(input.promotionWillingness, 80),
     additionalInfo: text(input.additionalInfo),
+    businessType: text(input.businessType, 80),
     assessmentId: text(input.assessmentId, 160),
     assessmentStatus: assessmentStatus && allowedStatuses.has(assessmentStatus) ? assessmentStatus : undefined,
     assessmentPattern: text(input.assessmentPattern, 160),
@@ -179,7 +186,7 @@ export async function POST(request: Request) {
     return submitAssessmentToHubSpot(lead);
   }
 
-  if (interest === "strategy") {
+  if (interest === "strategy" || interest === "local-business") {
     if (!firstName || !lastName || !lead.organization) {
       return NextResponse.json({ message: "Required strategy session contact information is missing." }, { status: 400 });
     }

@@ -7,13 +7,13 @@ import {
   About,
   Audience,
   Contact,
-  ContextReadyBridge,
   Hero,
   MarketProblem,
   Methodology,
   Perspectives,
   PointOfView,
 } from "@/components/sections/Sections";
+import { WhoWeHelp } from "@/components/sections/WhoWeHelp";
 import { LeadDialog } from "@/components/ui/LeadDialog";
 
 export function MarketingSite() {
@@ -34,14 +34,14 @@ export function MarketingSite() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Header onRequest={openStrategy} />
       <main id="main-content">
-        <Hero onStrategy={openStrategy} />
+        <Hero />
+        <WhoWeHelp current="enterprise" />
         <MarketProblem />
         <PointOfView />
         <Methodology />
         <Audience />
         <Perspectives />
         <About />
-        <ContextReadyBridge />
         <Contact onAssessment={openAssessment} onStrategy={openStrategy} />
       </main>
       <Footer />
