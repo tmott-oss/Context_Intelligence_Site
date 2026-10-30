@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Context Intelligence",
   },
   description:
-    "Independent executive advisory for organizational AI transformation—strategy, context, workflow redesign, governance, adoption, and measurable business outcomes.",
+    "Context Intelligence finds where knowledge, work, and opportunity get stuck, then builds systems that make the business run better.",
   keywords: [
     "organizational AI transformation",
     "AI Transformation Blueprint",
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
     apple: "/assets/logo-mark.png",
   },
   openGraph: {
-    title: "Context Intelligence | Organizational AI Transformation",
-    description: "Strategy first. Context built in. Business value measured.",
+    title: "Context Intelligence",
+    description: "Context Intelligence finds where knowledge, work, and opportunity get stuck, then builds systems that make the business run better.",
     type: "website",
     images: [{ url: "/og.png", width: 1731, height: 909, alt: "Context Intelligence" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Context Intelligence | Organizational AI Transformation",
-    description: "Strategy first. Context built in. Business value measured.",
+    title: "Context Intelligence",
+    description: "Context Intelligence finds where knowledge, work, and opportunity get stuck, then builds systems that make the business run better.",
     images: ["/og.png"],
   },
 };

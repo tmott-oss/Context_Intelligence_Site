@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { WhoWeHelp } from "@/components/sections/WhoWeHelp";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { LeadDialog } from "@/components/ui/LeadDialog";
@@ -59,7 +60,7 @@ export function ContextReadySite() {
             <div className="context-ready-hero__copy">
               <Eyebrow>Context Ready · The Creator Product Studio</Eyebrow>
               <h1 id="context-ready-title">Turn what you know into a product your audience will buy.</h1>
-              <p>Your audience already comes to you for answers. Context Ready helps turn those answers into a complete, valuable digital product—built around your expertise, voice, and community.</p>
+              <p>Your audience already comes to you for answers. Context Ready turns that trust into a product people can buy, built around your expertise, voice, and community.</p>
               <div className="actions">
                 <Button onClick={openApplication}>Apply to Build Your Product</Button>
                 <a className="button button--outline" href="#how-it-works">See How It Works</a>
@@ -99,7 +100,7 @@ export function ContextReadySite() {
                 <Eyebrow>What We Build</Eyebrow>
                 <h2 id="build-title">Products designed around the outcome your audience wants.</h2>
               </div>
-              <p>The right product depends on your expertise, audience, and market opportunity. Each partnership selects the formats that best support the result—not a preset package.</p>
+              <p>The right product depends on your expertise, audience, and the outcome people will pay for. Formats follow that offer. There is no preset package.</p>
             </div>
             <ul className="context-ready-formats">
               {productFormats.map((format, index) => <li key={format}><span>{String(index + 1).padStart(2, "0")}</span><strong>{format}</strong></li>)}
@@ -111,7 +112,7 @@ export function ContextReadySite() {
           <div className="shell">
             <div className="clarity-heading">
               <Eyebrow>How It Works</Eyebrow>
-              <h2 id="process-title">A practical path from opportunity to improvement.</h2>
+              <h2 id="process-title">A practical path from expertise to a product people can buy.</h2>
             </div>
             <div className="context-ready-process__grid">
               {process.map(([number, title, description]) => (
@@ -161,12 +162,13 @@ export function ContextReadySite() {
           <div className="shell context-ready-cta__inner">
             <Eyebrow centered>Build What Comes Next</Eyebrow>
             <h2 id="context-ready-cta-title">Your audience is already listening. Give them the complete path.</h2>
-            <p>If you have proven expertise and an engaged audience, let’s explore whether it can become a valuable digital product.</p>
+            <p>If you have proven expertise and an engaged audience, apply. We will look at whether it can become a product people can buy.</p>
             <div className="actions actions--center">
               <Button onClick={openApplication}>Apply to Build Your Product</Button>
             </div>
           </div>
         </section>
+        <WhoWeHelp current="creators" />
       </main>
       <Footer />
       <LeadDialog key={`context-ready-${dialogOpen}`} open={dialogOpen} intent="context-ready" onClose={closeApplication} />

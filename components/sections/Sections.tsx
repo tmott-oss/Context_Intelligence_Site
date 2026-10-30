@@ -28,7 +28,7 @@ const perspectives = [
   ["Business Independence", "Preparing Founder-Led Businesses for AI and Scale", "Reducing key-person dependency creates a stronger foundation for AI, succession, acquisition, and durable enterprise value."],
 ] as const;
 
-export function Hero({ onStrategy }: Pick<RequestActions, "onStrategy">) {
+export function Hero() {
   return (
     <section className="clarity-hero" aria-labelledby="hero-title">
       <div className="clarity-hero__visual" aria-hidden="true">
@@ -36,12 +36,13 @@ export function Hero({ onStrategy }: Pick<RequestActions, "onStrategy">) {
       </div>
       <div className="shell clarity-hero__inner">
         <div className="clarity-hero__copy">
-          <Eyebrow>Organizational AI Transformation</Eyebrow>
-          <h1 id="hero-title">AI isn&apos;t a software project. <em>It&apos;s a business transformation initiative.</em></h1>
-          <p>The AI Transformation Blueprint™ is a proven architecture for turning AI potential into measurable, lasting business value—aligning vision, processes, business context, workflows, agents, adoption, and scale.</p>
+          <Eyebrow>Enterprise</Eyebrow>
+          <h1 id="hero-title">Scale makes inefficiency expensive.</h1>
+          <p>Context Intelligence does AI transformation and AI operations work for organizations where that cost already shows up in revenue, margins, customers, and execution.</p>
+          <p>The AI Transformation Blueprint™ is the offer: a consultative assessment, then the operating model for vision, processes, context, workflows, agents, adoption, and scale.</p>
           <div className="actions">
-            <Link className="button button--blue" href="/assessment">Take the 5-Minute Assessment</Link>
-            <Button variant="outline" onClick={onStrategy}>Request an Executive Strategy Session</Button>
+            <a className="button button--blue" href="#why-it-matters">See where it shows up</a>
+            <a className="button button--outline" href="#methodology">See the blueprint</a>
           </div>
           <p className="clarity-hero__proof">Strategy first. Context built in. Business value measured.</p>
         </div>
@@ -86,7 +87,7 @@ export function PointOfView() {
       <div className="shell">
         <div className="clarity-heading clarity-heading--center">
           <Eyebrow centered>The Context Intelligence Point of View</Eyebrow>
-          <h2 id="pov-title">Technology should follow strategy—not the other way around.</h2>
+          <h2 id="pov-title">Technology should follow strategy, not the other way around.</h2>
         </div>
         <div className="comparison">
           <article>
@@ -129,7 +130,7 @@ export function Audience() {
       <div className="shell audience-layout">
         <div className="clarity-heading">
           <Eyebrow>Who This Is For</Eyebrow>
-          <h2 id="audience-title">Built for leaders who know AI matters—but refuse to chase it blindly.</h2>
+          <h2 id="audience-title">Built for leaders who need AI to change the business, not just the task list.</h2>
         </div>
         <ul>{audiences.map((audience, index) => <li key={audience}><span>{String(index + 1).padStart(2, "0")}</span>{audience}</li>)}</ul>
       </div>
@@ -185,26 +186,8 @@ export function About() {
           <Eyebrow>About Context Intelligence</Eyebrow>
           <h2 id="about-title">Built from a simple observation: AI fails when it is disconnected from how the business actually works.</h2>
           <p>For more than two decades, Troy has helped organizations improve sales performance, operational execution, technology adoption, and business transformation.</p>
-          <p>Context Intelligence was created to help leaders move beyond disconnected tools and experiments—to build the strategy, context, operating model, and organizational capability required to turn AI into measurable business performance.</p>
+          <p>Context Intelligence was created to help leaders move past disconnected tools and experiments. The work is the strategy, context, operating model, and organizational capability required to turn AI into business performance.</p>
           <p className="about-note">An independent executive guide who translates between business priorities, workflows, technology, governance, and adoption.</p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function ContextReadyBridge() {
-  return (
-    <section id="context-ready" className="clarity-section context-ready-bridge anchor-section" aria-labelledby="context-ready-bridge-title">
-      <div className="shell context-ready-bridge__layout">
-        <div>
-          <Eyebrow>Context Ready</Eyebrow>
-          <h2 id="context-ready-bridge-title">Turn your expertise into a product your audience can use—and buy.</h2>
-        </div>
-        <div className="context-ready-bridge__copy">
-          <p>Context Ready partners with creators and subject-matter experts to transform proven knowledge into structured digital products. You bring the expertise and audience. We help shape, build, launch, and improve the product.</p>
-          <p className="context-ready-bridge__label">The Creator Product Studio, by Context Intelligence.</p>
-          <Link className="button button--outline" href="/context-ready">Explore Context Ready</Link>
         </div>
       </div>
     </section>
@@ -215,9 +198,9 @@ export function Contact({ onStrategy }: RequestActions) {
   return (
     <section id="contact" className="clarity-section clarity-contact anchor-section" aria-labelledby="contact-title">
       <div className="shell clarity-contact__inner">
-        <Eyebrow centered>Begin With the Business</Eyebrow>
-        <h2 id="contact-title">Before choosing another AI tool, decide what should change.</h2>
-        <p>An Executive Strategy Session will help clarify your highest-value opportunities, expose the gaps holding AI back, and determine whether a broader transformation engagement makes sense.</p>
+        <Eyebrow centered>Begin with the business</Eyebrow>
+        <h2 id="contact-title">See where AI can change the business, then decide what to do first.</h2>
+        <p>The five-minute assessment shows where the operating foundation is ready and where it is not. An executive strategy session then names the outcomes worth pursuing and whether a broader engagement makes sense.</p>
         <div className="actions actions--center">
           <Link className="button button--blue" href="/assessment">Take the 5-Minute AI Transformation Assessment</Link>
           <Button variant="outline" onClick={onStrategy}>Request an Executive Strategy Session</Button>

@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { submitLead } from "@/lib/lead";
 import { Button } from "./Button";
 
-export type LeadIntent = "assessment" | "strategy" | "context-ready";
+export type LeadIntent = "assessment" | "strategy" | "context-ready" | "local-business";
 
 type FieldName =
   | "name"
@@ -19,7 +19,8 @@ type FieldName =
   | "productIdea"
   | "audienceQuestions"
   | "promotionWillingness"
-  | "additionalInfo";
+  | "additionalInfo"
+  | "businessType";
 
 type Fields = Record<FieldName, string>;
 
@@ -37,7 +38,18 @@ const initialFields: Fields = {
   audienceQuestions: "",
   promotionWillingness: "",
   additionalInfo: "",
+  businessType: "",
 };
+
+const businessTypes = [
+  "Restaurant",
+  "Home services",
+  "Delivery/Hauling",
+  "Salon",
+  "Automotive",
+  "Professional services",
+  "Other",
+] as const;
 
 const creatorTextFields = [
   ["platform", "Primary social or audience platform", "For example, YouTube, LinkedIn, a podcast, or newsletter"],
@@ -52,7 +64,7 @@ const creatorTextareas = [
   ["additionalInfo", "Additional information", "Anything else that would help us understand the opportunity."],
 ] as const;
 
-export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: LeadIntent; onClose: () => void }) {
+export function LeadDialog({ open, intent, onClose, mode = "dialog" }: { open: boolean; intent: LeadIntent; onClose: () => void; mode?: "dialog" | "inline" }) {
   const titleId = useId();
   const descriptionId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -61,9 +73,11 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const isContextReady = intent === "context-ready";
+  const isLocalBusiness = intent === "local-business";
+  const inline = mode === "inline";
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || inline) return;
     const previousFocus = document.activeElement as HTMLElement | null;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -87,9 +101,9 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
       document.removeEventListener("keydown", onKeyDown);
       previousFocus?.focus();
     };
-  }, [open, onClose]);
+  }, [open, onClose, inline]);
 
-  if (!open) return null;
+  if (!open && !inline) return null;
 
   const updateField = (field: FieldName, value: string) => {
     setFields((current) => ({ ...current, [field]: value }));
@@ -123,7 +137,7 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
       if (!fields.audienceQuestions.trim()) nextErrors.audienceQuestions = "Tell us what your audience asks for.";
       if (!fields.promotionWillingness) nextErrors.promotionWillingness = "Choose the option that best describes your participation.";
     } else if (!fields.organization.trim()) {
-      nextErrors.organization = "Enter your organization.";
+      nextErrors.organization = isLocalBusiness ? "Enter your business name." : "Enter your organization.";
     }
 
     setErrors(nextErrors);
@@ -151,6 +165,7 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
             lastName: fields.lastName.trim(),
             email: fields.email.trim(),
             organization: fields.organization.trim(),
+            businessType: fields.businessType,
             interest: intent,
           },
     );
@@ -163,29 +178,43 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
     }
   };
 
-  const eyebrow = isContextReady ? "Context Ready partnership" : intent === "assessment" ? "AI transformation readiness" : "Executive briefing";
-  const title = isContextReady ? "Apply to build your product" : intent === "assessment" ? "Request the AI Transformation Readiness Assessment" : "Request an executive strategy session";
+  const eyebrow = isContextReady ? "Context Ready partnership" : isLocalBusiness ? "Local business" : intent === "assessment" ? "AI transformation readiness" : "Executive briefing";
+  const title = isContextReady ? "Apply to build your product" : isLocalBusiness ? "Find out what's wasting your time" : intent === "assessment" ? "Request the AI Transformation Readiness Assessment" : "Request an executive strategy session";
   const intro = isContextReady
     ? "Tell us about your expertise, audience, and the opportunity you see. We review each application for partnership fit."
-    : intent === "assessment"
-      ? "Tell us where to reach you to begin an advisory assessment of the foundations required for coordinated AI transformation."
-      : "Tell us where to reach you to begin a focused conversation about your transformation priorities.";
+    : isLocalBusiness
+      ? "Name, email, and business name are enough. Type of business is optional."
+      : intent === "assessment"
+        ? "Tell us where to reach you to begin an advisory assessment of the foundations required for coordinated AI transformation."
+        : "Tell us where to reach you to begin a focused conversation about your transformation priorities.";
+  const successCopy = isContextReady
+    ? "Your Context Ready partnership application has been submitted."
+    : isLocalBusiness
+      ? "Your request has been submitted. We will be in touch."
+      : intent === "assessment"
+        ? "Your assessment request has been submitted."
+        : "Your request has been submitted for an executive strategy conversation.";
+  const submitLabel = isContextReady ? "Submit application" : isLocalBusiness ? "Find Out What's Wasting Your Time" : intent === "assessment" ? "Request assessment" : "Request session";
 
-  return (
-    <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <div ref={dialogRef} className={`dialog${isContextReady ? " dialog--application" : ""}`} role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}>
-        <button className="dialog__close" onClick={onClose} aria-label="Close dialog">×</button>
+  const resetInline = () => {
+    setStatus("idle");
+    setMessage("");
+  };
+
+  const frame = (
+      <div ref={dialogRef} className={inline ? "inline-form" : `dialog${isContextReady ? " dialog--application" : ""}`} role={inline ? undefined : "dialog"} aria-modal={inline ? undefined : true} aria-labelledby={inline ? undefined : titleId} aria-describedby={status === "success" ? undefined : descriptionId}>
+        {!inline && <button className="dialog__close" onClick={onClose} aria-label="Close dialog">×</button>}
         {status === "success" ? (
           <div className="dialog__success" aria-live="polite">
             <p className="eyebrow">Request received</p>
             <h2 id={titleId}>Thank you. We will be in touch.</h2>
-            <p>{isContextReady ? "Your Context Ready partnership application has been submitted." : intent === "assessment" ? "Your assessment request has been submitted." : "Your request has been submitted for an executive strategy conversation."}</p>
-            <Button onClick={onClose}>Close</Button>
+            <p>{successCopy}</p>
+            {inline ? <Button onClick={resetInline}>Submit another</Button> : <Button onClick={onClose}>Close</Button>}
           </div>
         ) : (
           <>
-            <p className="eyebrow">{eyebrow}</p>
-            <h2 id={titleId}>{title}</h2>
+            {!inline && <p className="eyebrow">{eyebrow}</p>}
+            {!inline && <h2 id={titleId}>{title}</h2>}
             <p id={descriptionId} className="dialog__intro">{intro}</p>
             <form onSubmit={handleSubmit} noValidate>
               <div className="dialog__field-grid">
@@ -211,17 +240,26 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
                       </label>
                     ))}
                     <label className="field">
-                      <span>Work email</span>
-                      <input type="email" autoComplete="email" value={fields.email} placeholder="you@company.com" aria-invalid={Boolean(errors.email)} onChange={(event) => updateField("email", event.target.value)} />
+                      <span>{isLocalBusiness ? "Email" : "Work email"}</span>
+                      <input type="email" autoComplete="email" value={fields.email} placeholder={isLocalBusiness ? "you@email.com" : "you@company.com"} aria-invalid={Boolean(errors.email)} onChange={(event) => updateField("email", event.target.value)} />
                       {errors.email && <small role="alert">{errors.email}</small>}
                     </label>
                   </>
                 )}
                 {!isContextReady && (
                   <label className="field">
-                    <span>Company name</span>
-                    <input type="text" autoComplete="organization" value={fields.organization} placeholder="Company" aria-invalid={Boolean(errors.organization)} onChange={(event) => updateField("organization", event.target.value)} />
+                    <span>{isLocalBusiness ? "Business name" : "Company name"}</span>
+                    <input type="text" autoComplete="organization" value={fields.organization} placeholder={isLocalBusiness ? "Business name" : "Company"} aria-invalid={Boolean(errors.organization)} onChange={(event) => updateField("organization", event.target.value)} />
                     {errors.organization && <small role="alert">{errors.organization}</small>}
+                  </label>
+                )}
+                {isLocalBusiness && (
+                  <label className="field field--wide">
+                    <span>Type of business (optional)</span>
+                    <select value={fields.businessType} onChange={(event) => updateField("businessType", event.target.value)}>
+                      <option value="">Select a type</option>
+                      {businessTypes.map((type) => <option key={type} value={type}>{type}</option>)}
+                    </select>
                   </label>
                 )}
                 {isContextReady && creatorTextFields.map(([field, label, placeholder]) => (
@@ -255,13 +293,20 @@ export function LeadDialog({ open, intent, onClose }: { open: boolean; intent: L
               )}
               {status === "error" && <p className="form-error" role="alert">{message}</p>}
               <div className="dialog__actions">
-                <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-                <Button type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Submitting…" : isContextReady ? "Submit application" : intent === "assessment" ? "Request assessment" : "Request session"}</Button>
+                {!inline && <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>}
+                <Button type="submit" disabled={status === "submitting"}>{status === "submitting" ? "Submitting…" : submitLabel}</Button>
               </div>
             </form>
           </>
         )}
       </div>
+  );
+
+  if (inline) return frame;
+
+  return (
+    <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+      {frame}
     </div>
   );
 }

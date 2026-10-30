@@ -36,7 +36,7 @@ export const blueprintStages: readonly BlueprintStage[] = [
   {
     number: "03",
     slug: "context",
-    title: "Context — The Foundation",
+    title: "Context: The Foundation",
     prompt: "Build the Business Context Engine™.",
     description:
       "Connect the knowledge, rules, data, history, terminology, and operating reality AI needs to understand your business.",

@@ -12,7 +12,8 @@ export type Lead = {
   assessmentPriority?: string;
   assessmentStrength?: string;
   assessmentScores?: Record<string, number>;
-  interest?: "assessment" | "strategy" | "context-ready";
+  interest?: "assessment" | "strategy" | "context-ready" | "local-business";
+  businessType?: string;
   platform?: string;
   profileUrl?: string;
   expertise?: string;

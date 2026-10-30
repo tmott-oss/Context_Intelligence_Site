@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { audiences } from "@/components/content/audiences";
 
 export function Footer() {
   return (
@@ -8,11 +9,11 @@ export function Footer() {
           <div className="footer__logo-crop">
             <Image src="/assets/logo-full.png" alt="Context Intelligence" width={300} height={110} unoptimized />
           </div>
-          <p>Independent executive advisory for organizational AI transformation.</p>
+          <p>Context Intelligence finds where knowledge, work, and opportunity get stuck, then builds systems that make the business run better.</p>
         </div>
-        <FooterColumn title="Transformation" links={[["AI Readiness Assessment", "/assessment"], ["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"]]} />
-        <FooterColumn title="Explore" links={[["Executive Perspectives", "/#perspectives"], ["Context Ready", "/context-ready"], ["Business Independence", "/pathways/business-independence"], ["Schedule a Conversation", "/#contact"]]} />
-        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"], ["Privacy", "/privacy"], ["Website Terms", "/terms"]]} />
+        <FooterColumn title="Who we help" links={audiences.map((audience) => [audience.label, audience.href])} />
+        <FooterColumn title="Transformation" links={[["AI Readiness Assessment", "/assessment"], ["Why It Matters", "/#why-it-matters"], ["AI Transformation Blueprint™", "/#methodology"], ["Executive Perspectives", "/#perspectives"]]} />
+        <FooterColumn title="Firm" links={[["About", "/#about"], ["Contact", "/#contact"], ["Business Independence", "/pathways/business-independence"], ["Privacy", "/privacy"], ["Website Terms", "/terms"]]} />
       </div>
       <div className="footer__base shell">
         <span>© 2026 Context Intelligence</span>
